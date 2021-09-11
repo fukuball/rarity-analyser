@@ -40,7 +40,8 @@ db.exec(
 db.exec(
     "CREATE TABLE traits (" +
         "id INT, " +
-        "trait_type TEXT " +
+        "trait_type TEXT, " +
+        "punk_count INT " +
     ")"
 );
 
@@ -53,8 +54,15 @@ db.exec(
     ")"
 );
 
+db.exec(
+    "CREATE TABLE punk_trait_counts (" +
+        "trait_count INT, " +
+        "punk_count INT " +
+    ")"
+);
+
 let insertPunkStmt = db.prepare("INSERT INTO punks VALUES (?, ?, ?, ?, ?, ?)");
-let insertTraitStmt = db.prepare("INSERT INTO traits VALUES (?, ?)");
+let insertTraitStmt = db.prepare("INSERT INTO traits VALUES (?, ?, ?)");
 let insertPuntTraitStmt = db.prepare("INSERT INTO punk_traits VALUES (?, ?, ?, ?)");
 
 collectionData.forEach(element => {
@@ -69,7 +77,7 @@ collectionData.forEach(element => {
         }
 
         if (!traitTypeCount.hasOwnProperty(attribute.trait_type)) {
-            insertTraitStmt.run(traitId, _.startCase(attribute.trait_type));
+            insertTraitStmt.run(traitId, _.startCase(attribute.trait_type), 0);
             traitIdMap[attribute.trait_type] = traitId;
             traitId = traitId + 1;
             traitTypeCount[attribute.trait_type] = 0 + 1;
@@ -93,7 +101,23 @@ collectionData.forEach(element => {
 });
 
 console.log(traitTypeCount);
+let updateTraitStmt = db.prepare("UPDATE traits SET punk_count = :punk_count WHERE id = :id");
+for(let traitType in traitTypeCount)
+{
+    let thisTraitTypeCount = traitTypeCount[traitType];
+    let traitId = traitIdMap[traitType];
+    updateTraitStmt.run({
+        punk_count: thisTraitTypeCount,
+        id: traitId
+    });
+}
 console.log(punkTraitTypeCount);
+let insertPunkTraitContStmt = db.prepare("INSERT INTO punk_trait_counts VALUES (?, ?)");
+for(let countType in punkTraitTypeCount)
+{
+    let thisTypeCount = punkTraitTypeCount[countType];
+    insertPunkTraitContStmt.run(countType, thisTypeCount);
+}
 
 let createScoreTableStmt = "CREATE TABLE punk_scores ( id INT, punk_id INT, ";
 let insertPunkScoreStmt = "INSERT INTO punk_scores VALUES (:id, :punk_id, ";
