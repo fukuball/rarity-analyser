@@ -51,6 +51,13 @@ db.serialize(function() {
         ")"
     );
 
+    var insertPunkStmt = db.prepare("INSERT INTO punks VALUES (?, ?, ?, ?, ?, ?)");
+    collectionData.forEach(element => {
+        console.log("Process punk: #" + element.id);
+        
+        insertPunkStmt.run(element.id, element.name, element.description, element.image, element.external_url, element.animation_url);
+    });
+
     /*
     punk_scores
     id
