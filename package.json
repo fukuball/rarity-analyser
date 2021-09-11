@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "start": "NODE_ENV=production node ./bin/www",
-    "start-dev": "NODE_ENV=development node-dev ./bin/www"
+    "start-dev": "NODE_ENV=development node-dev ./bin/www",
+    "postinstall": "node ./cmd/rarity_analyze.js"
   },
   "dependencies": {
     "app-root-path": "^3.0.0",
@@ -14,6 +15,7 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "node-dev": "^7.0.0"
+    "node-dev": "^7.0.0",
+    "sqlite3": "^5.0.2"
   }
 }
