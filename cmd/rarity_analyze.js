@@ -1,10 +1,10 @@
-var appRoot = require('app-root-path');
-var config = require(appRoot + '/config/config.js');
-var collectionData = require(appRoot + '/config/' + config.collection_file_name);
-var fs = require('fs');
-var sqlite3 = require('sqlite3').verbose();
+const appRoot = require('app-root-path');
+const config = require(appRoot + '/config/config.js');
+const collectionData = require(appRoot + '/config/' + config.collection_file_name);
+const fs = require('fs');
+const sqlite3 = require('sqlite3').verbose();
 
-var databasePath = appRoot + '/config/' + config.sqlite_file_name;
+const databasePath = appRoot + '/config/' + config.sqlite_file_name;
 
 /*if (fs.existsSync(databasePath)) {
     console.log("Database Exist.");
@@ -16,7 +16,7 @@ fs.writeFile(databasePath, '', { flag: 'w' }, function (err) {
     console.log("Database Created.");
 });
 
-let db = new sqlite3.Database(databasePath, (err) => {
+const db = new sqlite3.Database(databasePath, (err) => {
     if (err) {
         console.error(err.message);
     }
@@ -51,7 +51,7 @@ db.serialize(function() {
         ")"
     );
 
-    var insertPunkStmt = db.prepare("INSERT INTO punks VALUES (?, ?, ?, ?, ?, ?)");
+    let insertPunkStmt = db.prepare("INSERT INTO punks VALUES (?, ?, ?, ?, ?, ?)");
     collectionData.forEach(element => {
         console.log("Process punk: #" + element.id);
         
@@ -69,18 +69,4 @@ db.serialize(function() {
     trait_count_percentile DOUBLE
     trait_count_rarity DOUBLE
     */
-
-    /*var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
-    for (var i = 0; i < 10; i++) {
-        stmt.run("Ipsum " + i);
-    }
-    stmt.finalize();
-
-    db.each("SELECT rowid AS id, info FROM lorem", function(err, row) {
-        console.log(row.id + ": " + row.info);
-    });*/
 });
-
-/*collectionData.forEach(element => {
-    console.log(element);
-});*/
