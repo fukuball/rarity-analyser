@@ -8,7 +8,9 @@
   "scripts": {
     "start": "NODE_ENV=production node ./bin/www",
     "start-dev": "NODE_ENV=development node-dev ./bin/www",
-    "postinstall": "node ./cmd/rarity_analyze.js"
+    "rarity-analyze": "node ./cmd/rarity_analyze.js",
+    "echo-test": "echo 'Test'",
+    "postinstall": "echo 'You can run script here when post install'"
   },
   "dependencies": {
     "app-root-path": "^3.0.0",
