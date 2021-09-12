@@ -28,15 +28,19 @@ router.get('/', function(req, res, next) {
     page = 1;
   }
 
-  const totalPunkCount = db.prepare('SELECT COUNT(id) as punk_total FROM punks').get().punk_total;
-  let totalPage =  Math.ceil(totalPunkCount/limit);
+  let totalPunkCount = 0
+  
 
   let punks = null;
   if (!_.isEmpty(search)) {
+    totalPunkCount = db.prepare('SELECT COUNT(id) as punk_total FROM punks WHERE punks.id LIKE ?').get('%'+search+'%').punk_total;
     punks =  db.prepare('SELECT punks.*, punk_scores.rarity_rank FROM punks INNER JOIN punk_scores ON (punks.id = punk_scores.punk_id) WHERE punks.id LIKE ? LIMIT ?,?').all('%'+search+'%', offset, limit);
   } else {
+    totalPunkCount = db.prepare('SELECT COUNT(id) as punk_total FROM punks').get().punk_total;
     punks = db.prepare('SELECT punks.*, punk_scores.rarity_rank FROM punks INNER JOIN punk_scores ON (punks.id = punk_scores.punk_id) LIMIT ?,?').all(offset, limit);
   }
+
+  let totalPage =  Math.ceil(totalPunkCount/limit);
 
   res.render('index', { title: config.app_name, punks: punks, totalPage: totalPage, search: search, page: page, _:_ });
 });
