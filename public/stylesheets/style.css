@@ -294,3 +294,13 @@ a:hover .punk-info svg:not(.shadow) {
   border: 0;
   color: #fff;
 }
+
+.rarity-score-block {
+  padding: 10px; 
+  background-color: var(--primary); 
+  border-radius: 10px;
+}
+
+.rarity-score-block h4 {
+  font-size: var(--font-size-lg);
+}

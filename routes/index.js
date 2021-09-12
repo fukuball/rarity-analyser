@@ -54,7 +54,7 @@ router.get('/', function(req, res, next) {
 
   let totalPage =  Math.ceil(totalPunkCount/limit);
 
-  res.render('index', { title: config.app_name, punks: punks, totalPage: totalPage, search: search, orderBy, orderBy, page: page, _:_ });
+  res.render('index', { title: config.app_name, headerTitle: config.app_name, punks: punks, totalPage: totalPage, search: search, orderBy, orderBy, page: page, _:_ });
 });
 
 module.exports = router;
