@@ -1,3 +1,5 @@
+const appRoot = require('app-root-path');
+const config = require(appRoot + '/config/config.js');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -5,7 +7,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var punksRouter = require('./routes/punks');
 
 var app = express();
@@ -27,8 +28,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.locals.app_name = config.app_name;
+app.locals.ga_code = config.ga;
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/punk', punksRouter);
 
 // catch 404 and forward to error handler

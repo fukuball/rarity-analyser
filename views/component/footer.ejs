@@ -2,3 +2,12 @@
   <p>Made with ❤️ by <a href="https://twitter.com/fukuball" class="text-white" target="_blank">@fukuball</a></p>
   <p>Donate: 0x17cbD516166720b8c75fE75235Ed0218d9CFDFbe</p>
 </footer>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=<%= ga_code %>"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '<%= ga_code %>');
+</script>

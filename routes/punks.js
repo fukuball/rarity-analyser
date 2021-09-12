@@ -46,7 +46,17 @@ router.get('/:id', function(req, res, next) {
   if (!_.isEmpty(punk)) {
     title = punk.name;
   }
-  res.render('punk', { title: title, headerTitle: config.app_name, punk: punk, punkScore: punkScore, allTraitTypes: allTraitTypes, allDetailTraitTypesData: allDetailTraitTypesData, allTraitCountTypesData: allTraitCountTypesData, punkTraitData: punkTraitData, totalPunkCount: totalPunkCount, _:_});
+  res.render('punk', { 
+    title: title, 
+    punk: punk, 
+    punkScore: punkScore, 
+    allTraitTypes: allTraitTypes, 
+    allDetailTraitTypesData: allDetailTraitTypesData, 
+    allTraitCountTypesData: allTraitCountTypesData, 
+    punkTraitData: punkTraitData, 
+    totalPunkCount: totalPunkCount, 
+    _:_
+  });
 });
 
 module.exports = router;
