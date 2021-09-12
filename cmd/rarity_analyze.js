@@ -19,11 +19,14 @@ const db = new Database(databasePath);
 
 let totalPunk = 0;
 let traitTypeId = 0;
+let traitDetailTypeId = 0;
 let punkTraitTypeId = 0;
 let punkScoreId = 0;
 
 let traitTypeIdMap = {};
 let traitTypeCount = {};
+let traitDetailTypeIdMap = {};
+let traitDetailTypeCount = {};
 let punkTraitTypeCount = {};
 
 db.exec(
@@ -46,6 +49,15 @@ db.exec(
 );
 
 db.exec(
+    "CREATE TABLE trait_detail_types (" +
+        "id INT, " +
+        "trait_type_id INT, " +
+        "trait_detail_type TEXT, " +
+        "punk_count INT " +
+    ")"
+);
+
+db.exec(
     "CREATE TABLE punk_traits (" +
         "id INT, " +
         "punk_id INT, " +
@@ -63,6 +75,7 @@ db.exec(
 
 let insertPunkStmt = db.prepare("INSERT INTO punks VALUES (?, ?, ?, ?, ?, ?)");
 let insertTraitTypeStmt = db.prepare("INSERT INTO trait_types VALUES (?, ?, ?)");
+let insertTraitDetailTypeStmt = db.prepare("INSERT INTO trait_detail_types VALUES (?, ?, ?, ?)");
 let insertPuntTraitStmt = db.prepare("INSERT INTO punk_traits VALUES (?, ?, ?, ?)");
 
 collectionData.forEach(element => {
@@ -72,10 +85,11 @@ collectionData.forEach(element => {
 
     element.attributes.forEach(attribute => {
 
-        if (_.isEmpty(attribute.trait_type)) {
+        if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value)) {
             return;
         }
 
+        // Trait type
         if (!traitTypeCount.hasOwnProperty(attribute.trait_type)) {
             insertTraitTypeStmt.run(traitTypeId, _.startCase(attribute.trait_type), 0);
             traitTypeIdMap[attribute.trait_type] = traitTypeId;
@@ -83,6 +97,16 @@ collectionData.forEach(element => {
             traitTypeCount[attribute.trait_type] = 0 + 1;
         } else {
             traitTypeCount[attribute.trait_type] = traitTypeCount[attribute.trait_type] + 1;
+        }
+
+        // Trait detail type
+        if (!traitDetailTypeCount.hasOwnProperty(attribute.value)) {
+            insertTraitDetailTypeStmt.run(traitDetailTypeId, traitTypeIdMap[attribute.trait_type], _.startCase(attribute.value), 0);
+            traitDetailTypeIdMap[attribute.value] = traitDetailTypeId;
+            traitDetailTypeId = traitDetailTypeId + 1;
+            traitDetailTypeCount[attribute.value] = 0 + 1;
+        } else {
+            traitDetailTypeCount[attribute.value] = traitDetailTypeCount[attribute.value] + 1;   
         }
 
         insertPuntTraitStmt.run(punkTraitTypeId, element.id, traitTypeIdMap[attribute.trait_type], attribute.value);  
@@ -111,6 +135,17 @@ for(let traitType in traitTypeCount)
         id: traitTypeId
     });
 }
+console.log(traitDetailTypeCount);
+let updateTraitDetailTypeStmt = db.prepare("UPDATE trait_detail_types SET punk_count = :punk_count WHERE id = :id");
+for(let traitDetailType in traitDetailTypeCount)
+{
+    let thisTraitDetailTypeCount = traitDetailTypeCount[traitDetailType];
+    let traitDetailTypeId = traitDetailTypeIdMap[traitDetailType];
+    updateTraitDetailTypeStmt.run({
+        punk_count: thisTraitDetailTypeCount,
+        id: traitDetailTypeId
+    });
+}
 console.log(punkTraitTypeCount);
 let insertPunkTraitContStmt = db.prepare("INSERT INTO punk_trait_counts VALUES (?, ?)");
 for(let countType in punkTraitTypeCount)
@@ -137,6 +172,10 @@ collectionData.forEach(element => {
     console.log("Analyze punk: #" + element.id);
 
     let thisPunkTraitTypes = _.map(element.attributes, 'trait_type');
+    let thisPunkDetailTraits = {};
+    element.attributes.forEach(attribute => {
+        thisPunkDetailTraits[attribute.trait_type] = attribute.value;
+    });
 
     let punkScore = {};
     let raritySum = 0;
@@ -144,14 +183,19 @@ collectionData.forEach(element => {
     punkScore['punk_id'] = element.id;
     for(let traitType in traitTypeCount)
     {
-        let thisTraitTypeCount = traitTypeCount[traitType];
-        let traitTypeId = traitTypeIdMap[traitType];
+        
         if (thisPunkTraitTypes.includes(traitType)) {
-            punkScore['trait_type_' + traitTypeId + '_percentile'] = thisTraitTypeCount/totalPunk;
-            punkScore['trait_type_' + traitTypeId + '_rarity'] = totalPunk/thisTraitTypeCount;
-            raritySum = raritySum + totalPunk/thisTraitTypeCount;
-        } else {
+            // has trait
+            let traitDetailType = thisPunkDetailTraits[traitType];
+            let thisTraitDetailTypeCount = traitDetailTypeCount[traitDetailType];
+            let traitTypeId = traitTypeIdMap[traitType];
+            punkScore['trait_type_' + traitTypeId + '_percentile'] = thisTraitDetailTypeCount/totalPunk;
+            punkScore['trait_type_' + traitTypeId + '_rarity'] = totalPunk/thisTraitDetailTypeCount;
+            raritySum = raritySum + totalPunk/thisTraitDetailTypeCount;
+        } else {   
             // missing trait
+            let thisTraitTypeCount = traitTypeCount[traitType];
+            let traitTypeId = traitTypeIdMap[traitType];
             punkScore['trait_type_' + traitTypeId + '_percentile'] = (totalPunk-thisTraitTypeCount)/totalPunk;
             punkScore['trait_type_' + traitTypeId + '_rarity'] = totalPunk/(totalPunk-thisTraitTypeCount);
             raritySum = raritySum + totalPunk/(totalPunk-thisTraitTypeCount);
