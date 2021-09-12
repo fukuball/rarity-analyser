@@ -113,7 +113,7 @@ collectionData.forEach(element => {
         punkTraitTypeId = punkTraitTypeId + 1;          
     });
 
-    let thisPunkTraitTypes = _.map(element.attributes, 'trait_type');
+    let thisPunkTraitTypes = _.compact(_.map(element.attributes, 'trait_type'));
 
     if (!punkTraitTypeCount.hasOwnProperty(thisPunkTraitTypes.length)) {
         punkTraitTypeCount[thisPunkTraitTypes.length] = 0 + 1;
@@ -171,9 +171,14 @@ insertPunkScoreStmt = db.prepare(insertPunkScoreStmt);
 collectionData.forEach(element => {
     console.log("Analyze punk: #" + element.id);
 
-    let thisPunkTraitTypes = _.map(element.attributes, 'trait_type');
+    let thisPunkTraitTypes = _.compact(_.map(element.attributes, 'trait_type'));
     let thisPunkDetailTraits = {};
     element.attributes.forEach(attribute => {
+
+        if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value)) {
+            return;
+        }
+
         thisPunkDetailTraits[attribute.trait_type] = attribute.value;
     });
 
