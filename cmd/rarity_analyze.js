@@ -7,10 +7,10 @@ const _ = require('lodash');
 
 const databasePath = appRoot + '/config/' + config.sqlite_file_name;
 
-/*if (fs.existsSync(databasePath)) {
+if (fs.existsSync(databasePath)) {
     console.log("Database exist.");
     return;
-}*/
+}
 
 fs.writeFileSync(databasePath, '', { flag: 'w' });
 console.log("Database created.");

@@ -2,10 +2,16 @@ const appRoot = require('app-root-path');
 const config = require(appRoot + '/config/config.js');
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
 const Database = require('better-sqlite3');
 const _ = require('lodash');
 
-const databasePath = appRoot + '/config/' + config.sqlite_file_name;
+let databasePath = appRoot + '/config/' + config.sqlite_file_name;
+
+if (!fs.existsSync(databasePath)) {
+  databasePath = appRoot + '/config/database.sqlite.sample';
+}
+
 const db = new Database(databasePath);
 
 /* GET home page. */
