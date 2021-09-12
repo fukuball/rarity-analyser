@@ -146,10 +146,11 @@ body {
   position: relative;
   margin: 0;
   padding: 0;
+  max-width: 40rem;
+  width: 100%;
 }
 
 .search input {
-  min-width: 40rem;
   width: 100%;
   cursor: pointer;
   position: relative;
