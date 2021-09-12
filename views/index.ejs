@@ -59,43 +59,13 @@
           </h1>
           <% } %>
         </div>
-        <% if (totalPage > 1) { %>
-        <nav aria-label="Page navigation" class="mt-3" style="overflow: scroll;">
-          <ul class="pagination justify-content-center">
-            <% if (page > 1) { %>
-            <li class="page-item">
-              <a class="page-link" href="/?search=<%= search %>&order_by=<%= orderBy %>&page=1">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <% } %>
-            <% var i = 1;
-            if (page > 5) {
-                i = +page - 4;
-            } %>
-            <% if (i !== 1) { %>
-              <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-            <% } %>
-            <% for (i; i<=totalPage; i++) { %>
-              <% if (page == i) { %>
-                  <li class="page-item active"><a class="page-link"><%= i %></a></li>
-              <% } else { %>
-                  <li class="page-item"><a class="page-link" href="/?search=<%= search %>&order_by=<%= orderBy %>&page=<%= i %>"><%= i %></a></li>
-              <% } %>
-              <% if (i == (+page + 4)) { %>
-                  <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-              <% break; } %>
-            <% } %>
-            <% if (page != totalPage) { %>
-              <li class="page-item">
-                <a class="page-link" href="/?search=<%= search %>&order_by=<%= orderBy %>&page=<%= totalPage %>">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            <% } %>
-          </ul>
-        </nav>
-        <% } %>
+        <%- 
+        include('./component/paginate', {
+          totalPage: totalPage, 
+          page: page, 
+          path: '/?search='+search+'&order_by='+orderBy
+        }); 
+        -%>
       </main>
       <%- include('./component/footer'); -%>
     </div>

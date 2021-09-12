@@ -24,6 +24,10 @@ router.get('/', function(req, res, next) {
   let offset = 0;
   let limit = 100;
 
+  if (_.isEmpty(search)) {
+    search = '';
+  }
+
   if (orderBy == 'rarity' || orderBy == 'id') {
     orderBy = orderBy;
   } else {
