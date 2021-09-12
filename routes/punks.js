@@ -12,8 +12,30 @@ router.get('/:id', function(req, res, next) {
   let punkId = req.params.id;
 
   let punk = db.prepare('SELECT punks.*, punk_scores.rarity_rank FROM punks INNER JOIN punk_scores ON (punks.id = punk_scores.punk_id) WHERE punks.id = ?').get(punkId);
+  let punkScore = db.prepare('SELECT punk_scores.* FROM punk_scores WHERE punk_scores.punk_id = ?').get(punkId);
+  let allTraitTypes = db.prepare('SELECT trait_types.* FROM trait_types').all();
+  let allDetailTraitTypes = db.prepare('SELECT trait_detail_types.* FROM trait_detail_types').all();
+  let allTraitCountTypes = db.prepare('SELECT punk_trait_counts.* FROM punk_trait_counts').all();
 
-  res.render('punk', { title: 'Punk', headerTitle: config.app_name, punk: punk});
+  let punkTraits = db.prepare('SELECT punk_traits.* FROM punk_traits WHERE punk_traits.punk_id = ?').all(punkId);
+  let totalPunkCount = db.prepare('SELECT COUNT(id) as punk_total FROM punks').get().punk_total;
+
+  let punkTraitData = {};
+  punkTraits.forEach(punkTrait => {
+    punkTraitData[punkTrait.trait_type_id] = punkTrait.value;
+  });
+
+  let allDetailTraitTypesData = {};
+  allDetailTraitTypes.forEach(detailTrait => {
+    allDetailTraitTypesData[detailTrait.trait_detail_type] = detailTrait.punk_count;
+  });
+
+  let allTraitCountTypesData = {};
+  allTraitCountTypes.forEach(traitCount => {
+    allTraitCountTypesData[traitCount.trait_count] = traitCount.punk_count;
+  });
+
+  res.render('punk', { title: 'Punk', headerTitle: config.app_name, punk: punk, punkScore: punkScore, allTraitTypes: allTraitTypes, allDetailTraitTypesData: allDetailTraitTypesData, allTraitCountTypesData: allTraitCountTypesData, punkTraitData: punkTraitData, totalPunkCount: totalPunkCount});
 });
 
 module.exports = router;

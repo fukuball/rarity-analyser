@@ -304,3 +304,38 @@ a:hover .punk-info svg:not(.shadow) {
 .rarity-score-block h4 {
   font-size: var(--font-size-lg);
 }
+
+.rarity-score-sum {
+  text-align: center;
+  font-size: var(--font-size-xl);
+  padding: 20px;
+  border-radius: 10px;
+  background-color: var(--semi-primary);
+}
+
+.trait-value-block {
+  background-color: var(--primary-dark); 
+  border-radius: 10px;
+  padding: 2px;
+}
+
+.trait-value {
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: var(--font-size-md);
+}
+
+.trait-value-count {
+  background-color: var(--gray-300);
+  color: var(--black);
+  border-radius: 7px;
+  text-align: center;
+  width: 70px;
+  height: 30px;
+  line-height: 30px;
+  font-size: var(--font-size-md);
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 3px;
+}
