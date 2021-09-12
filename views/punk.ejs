@@ -28,6 +28,7 @@
       <main class="px-3" style="min-height: 100%;">
         <div style="max-width: 42rem; margin-top: 5rem; margin-left: auto; margin-right: auto;">
           <div class="row">
+            <% if (!_.isEmpty(punk)) { %>
             <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-5" style="padding-left: 30px; padding-right: 30px;">
               <div>
                 <h3 class="punk-rank">Rank #<%= punk.rarity_rank %></h3>
@@ -91,6 +92,11 @@
                 </div>
               </div>
             </div>
+            <% } else { %>
+              <h1 class="text-center">
+                There's no result about this ID
+              </h1>
+            <% } %>
           </div>
         </div>
       </main>

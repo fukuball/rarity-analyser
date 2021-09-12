@@ -3,6 +3,7 @@ const config = require(appRoot + '/config/config.js');
 const express = require('express');
 const router = express.Router();
 const Database = require('better-sqlite3');
+const _ = require('lodash');
 
 const databasePath = appRoot + '/config/' + config.sqlite_file_name;
 const db = new Database(databasePath);
@@ -35,7 +36,11 @@ router.get('/:id', function(req, res, next) {
     allTraitCountTypesData[traitCount.trait_count] = traitCount.punk_count;
   });
 
-  res.render('punk', { title: 'Punk', headerTitle: config.app_name, punk: punk, punkScore: punkScore, allTraitTypes: allTraitTypes, allDetailTraitTypesData: allDetailTraitTypesData, allTraitCountTypesData: allTraitCountTypesData, punkTraitData: punkTraitData, totalPunkCount: totalPunkCount});
+  let title = config.app_name;
+  if (!_.isEmpty(punk)) {
+    title = punk.name;
+  }
+  res.render('punk', { title: title, headerTitle: config.app_name, punk: punk, punkScore: punkScore, allTraitTypes: allTraitTypes, allDetailTraitTypesData: allDetailTraitTypesData, allTraitCountTypesData: allTraitCountTypesData, punkTraitData: punkTraitData, totalPunkCount: totalPunkCount, _:_});
 });
 
 module.exports = router;
