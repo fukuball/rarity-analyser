@@ -77,10 +77,6 @@ body {
   font-size: var(--font-size-base);
 }
 
-.cover-container {
-  max-width: 56em;
-}
-
 /*
  * Header
  */
@@ -116,6 +112,20 @@ body {
   font-style: italic;
   color: var(--primary);
   text-decoration: none;
+  position: relative;
+}
+
+.brand span {
+  position: relative;
+  z-index: 1;
+}
+
+.brand svg {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
 }
 
 .nav-link {
@@ -208,4 +218,52 @@ body {
   height: var(--size-3);
   display: block;
   vertical-align: middle;
+}
+
+.punk-avatar {
+  width: 100%;
+  background-color: #000;
+  border-radius: 100%;
+}
+
+.punk-info {
+  position: relative;
+  font-family: var(--font-family-title);
+  font-weight: 700;
+}
+
+.punk-info svg {
+  transition: all var(--speed);
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  z-index: -1;
+  display: block;
+  vertical-align: middle;
+}
+
+.punk-info svg.shadow {
+  margin-left: -.5rem;
+  margin-top: .5rem;
+}
+
+a:hover .punk-info svg.shadow {
+  margin-top: .325rem;
+  margin-left: -.325rem;
+  transform: rotate(-9deg) !important; 
+}
+
+a:hover .punk-info svg:not(.shadow) {
+  margin-top: .125rem;
+  margin-left: -.125rem;
+  transform: rotate(9deg) !important; 
+}
+
+.punk-rank {
+  color: var(--white); 
+  font-family: var(--font-family-title);
+  font-weight: 700;
+  font-size: var(--font-size-lg);
 }

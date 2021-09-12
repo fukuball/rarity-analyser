@@ -21,11 +21,11 @@
     <link href="/images/profile@32w.png" rel="icon" type="image/png">
     <link href="/images/profile.png" rel="apple-touch-icon">
   </head>
-  <body class="d-flex h-100 text-white bg-dark">
+  <body class="d-flex text-white bg-dark" style="min-height: 100%;">
     
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <div class="container d-flex w-100 p-3 mx-auto flex-column" style="min-height: 100%; max-width: 72em;">
       <%- include('./component/header'); -%>
-      <main class="px-3 h-100">
+      <main class="px-3" style="min-height: 100%;">
         <h1 class="superbig upper text-center">10k One Day Punks</h1>
         <form class="search text-center">
           <fieldset>
@@ -40,6 +40,54 @@
             <button type="submit">Search</button>
           </footer>
         </form>
+        <div class="row punks">
+          <% punks.forEach(function(punk) { %>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-5" style="padding-left: 30px; padding-right: 30px;">
+              <a href="#" style="text-decoration: none;">
+                <div>
+                  <h3 class="punk-rank">Rank #<%= punk.rarity_rank %></h3>
+                  <img class="punk-avatar" src="<%= punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'); %>" alt="<%= punk.name %>" />
+                  <div class="punk-info text-center">
+                    <span style="font-size: var(--font-size-md); color: var(--white); text-decoration: none;"><%= punk.name %></span>
+                    <svg 
+                      viewBox="0 0 128 20" 
+                      class="shadow"
+                      style="transform: 
+                        <% if (punk.id % 4 == 0) { %> 
+                        rotate(2.10582deg) 
+                        <% } else if (punk.id % 4 == 1) { %> 
+                        rotate(-1.55956deg) 
+                        <% } else if (punk.id % 4 == 2) { %> 
+                        rotate(-2.11894deg) 
+                        <% } else { %> 
+                        rotate(-0.804652deg) 
+                        <% } %>
+                        scale(1.15);"
+                      >
+                      <path d="M18.659464617674463 5.886049064536063L104.37818072626806 10.101969738149581L113.93276709105373 19.132353769878222L21.88176277928382 18.182120128591457L18.659464617674463 5.886049064536063Z" style="fill: var(--contrast);"></path>
+                    </svg>
+                    <svg 
+                      viewBox="0 0 128 20" 
+                      style="transform: 
+                        <% if (punk.id % 4 == 0) { %> 
+                        rotate(2.10582deg) 
+                        <% } else if (punk.id % 4 == 1) { %> 
+                        rotate(-1.55956deg) 
+                        <% } else if (punk.id % 4 == 2) { %> 
+                        rotate(-2.11894deg) 
+                        <% } else { %> 
+                        rotate(-0.804652deg) 
+                        <% } %>
+                        scale(1.15);"
+                      >
+                      <path d="M18.659464617674463 5.886049064536063L104.37818072626806 10.101969738149581L113.93276709105373 19.132353769878222L21.88176277928382 18.182120128591457L18.659464617674463 5.886049064536063Z" style="fill: var(--primary);"></path>
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            </div>
+          <% }); %>
+        </div>
       </main>
       <%- include('./component/footer'); -%>
     </div>

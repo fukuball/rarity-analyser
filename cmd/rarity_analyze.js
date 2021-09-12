@@ -162,8 +162,8 @@ for (let i = 0; i < traitTypeId; i++) {
     insertPunkScoreStmt = insertPunkScoreStmt + ":trait_type_" + i + "_percentile, :trait_type_" + i + "_rarity, ";
 }
 
-createScoreTableStmt = createScoreTableStmt + "trait_count INT,  trait_count_percentile DOUBLE, trait_count_rarity DOUBLE, rarity_sum DOUBLE)";
-insertPunkScoreStmt = insertPunkScoreStmt + ":trait_count,  :trait_count_percentile, :trait_count_rarity, :rarity_sum)";
+createScoreTableStmt = createScoreTableStmt + "trait_count INT,  trait_count_percentile DOUBLE, trait_count_rarity DOUBLE, rarity_sum DOUBLE, rarity_rank INT)";
+insertPunkScoreStmt = insertPunkScoreStmt + ":trait_count,  :trait_count_percentile, :trait_count_rarity, :rarity_sum, :rarity_rank)";
 
 db.exec(createScoreTableStmt);
 insertPunkScoreStmt = db.prepare(insertPunkScoreStmt);
@@ -206,8 +206,23 @@ collectionData.forEach(element => {
     punkScore['trait_count_rarity'] = totalPunk/punkTraitTypeCount[thisPunkTraitTypes.length];
     raritySum = raritySum + totalPunk/punkTraitTypeCount[thisPunkTraitTypes.length];
     punkScore['rarity_sum'] = raritySum;
+    punkScore['rarity_rank'] = 0;
 
     insertPunkScoreStmt.run(punkScore);
 
     punkScoreId = punkScoreId + 1;
+});
+
+const punkScoreStmt = db.prepare('SELECT rarity_sum FROM punk_scores WHERE punk_id = ?');
+const punkRankStmt = db.prepare('SELECT COUNT(id) as higherRank FROM punk_scores WHERE rarity_sum > ?');
+let updatPunkRankStmt = db.prepare("UPDATE punk_scores SET rarity_rank = :rarity_rank WHERE punk_id = :punk_id");
+
+collectionData.forEach(element => {
+    console.log("Ranking punk: #" + element.id);
+    let punkScore = punkScoreStmt.get(element.id);
+    let punkRank = punkRankStmt.get(punkScore.rarity_sum);
+    updatPunkRankStmt.run({
+        rarity_rank: punkRank.higherRank+1,
+        punk_id: element.id
+    });
 });
