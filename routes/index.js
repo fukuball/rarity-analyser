@@ -65,7 +65,8 @@ router.get('/', function(req, res, next) {
   let totalPage =  Math.ceil(totalPunkCount/limit);
 
   res.render('index', { 
-    title: config.app_name, 
+    title: config.app_name,
+    ogImage: config.main_og_image,
     punks: punks, 
     totalPage: totalPage, 
     search: search, 

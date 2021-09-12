@@ -47,7 +47,8 @@ router.get('/:id', function(req, res, next) {
     title = punk.name;
   }
   res.render('punk', { 
-    title: title, 
+    title: title,
+    ogImage: punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'),
     punk: punk, 
     punkScore: punkScore, 
     allTraitTypes: allTraitTypes, 
