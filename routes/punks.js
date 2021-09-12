@@ -5,6 +5,8 @@ const router = express.Router();
 const fs = require('fs');
 const Database = require('better-sqlite3');
 const _ = require('lodash');
+const MarkdownIt = require('markdown-it'),
+    md = new MarkdownIt();
 
 let databasePath = appRoot + '/config/' + config.sqlite_file_name;
 
@@ -48,6 +50,7 @@ router.get('/:id', function(req, res, next) {
   }
   res.render('punk', { 
     title: title,
+    ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
     ogImage: punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'),
     punk: punk, 
     punkScore: punkScore, 
@@ -56,7 +59,8 @@ router.get('/:id', function(req, res, next) {
     allTraitCountTypesData: allTraitCountTypesData, 
     punkTraitData: punkTraitData, 
     totalPunkCount: totalPunkCount, 
-    _:_
+    _: _,
+    md: md
   });
 });
 

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" class="h-100">
   <head>
-    <%- include('./component/meta', {title: title, ogImage: ogImage}); -%>
+    <%- include('./component/meta', {title: title, ogUrl: ogUrl, ogImage: ogImage}); -%>
   </head>
   <body class="d-flex text-white bg-dark" style="min-height: 100%;">
     
@@ -11,7 +11,7 @@
         <div style="max-width: 42rem; margin-top: 5rem; margin-left: auto; margin-right: auto;">
           <div class="row">
             <% if (!_.isEmpty(punk)) { %>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-5" style="padding-left: 30px; padding-right: 30px;">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-2" style="padding-left: 30px; padding-right: 30px;">
               <div>
                 <h3 class="punk-rank">Rank #<%= punk.rarity_rank %></h3>
                 <img class="punk-avatar" src="<%= punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'); %>" alt="<%= punk.name %>" />
@@ -19,8 +19,25 @@
                   <span style="font-size: var(--font-size-md); color: var(--white); text-decoration: none;"><%= punk.name %></span>
                 </div>
               </div>
+              <div class="mt-3 mb-3">
+                <div style="line-height: 1.2rem;">
+                  <%- md.render(punk.description) %>
+                </div>
+                <a class="view-on-link" href="https://opensea.io/assets/<%= collection_contract_address %>/<%= punk.id %>" target="_blank">
+                  <div class="view-on-block text-center">
+                    <img class="view-on-icon" src="/images/opensea.svg">
+                    View on OpenSea
+                  </div>
+                </a>
+                <a class="view-on-link" href="<%= punk.external_url %>" target="_blank">
+                  <div class="view-on-block text-center">
+                    <img class="view-on-icon" src="/images/profile@32w.png">
+                    View on PunkScape
+                  </div>
+                </a>
+              </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-5" >
+            <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-2" >
               <div class="rarity-score-block">
                 <h4 class="text-center">Rarity Score</h4>
                 <div class="rarity-score-sum">

@@ -339,3 +339,27 @@ a:hover .punk-info svg:not(.shadow) {
   margin-bottom: auto;
   margin-right: 3px;
 }
+
+.view-on-block {
+  background-color: var(--primary-dark); 
+  border-radius: 10px;
+  color: var(--white);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-base);
+  margin-bottom: 10px;
+  height: 50px;
+  line-height: 50px;
+}
+
+.view-on-icon {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  top: -1px;
+  left: -2px;
+}
+
+.view-on-link, .view-on-link:hover {
+  color: var(--white);
+  text-decoration: none;
+}

@@ -30,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.locals.app_name = config.app_name;
 app.locals.ga_code = config.ga;
+app.locals.collection_contract_address = config.collection_contract_address;
 
 app.use('/', indexRouter);
 app.use('/punk', punksRouter);

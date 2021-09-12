@@ -66,6 +66,7 @@ router.get('/', function(req, res, next) {
 
   res.render('index', { 
     title: config.app_name,
+    ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
     ogImage: config.main_og_image,
     punks: punks, 
     totalPage: totalPage, 
