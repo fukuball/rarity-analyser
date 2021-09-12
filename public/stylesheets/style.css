@@ -148,8 +148,6 @@ body {
 
 .search {
   margin: var(--size-6) 0;
-  display: flex;
-  justify-content: center;
 }
 
 .search fieldset {
@@ -158,6 +156,8 @@ body {
   padding: 0;
   max-width: 40rem;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .search input {
@@ -218,6 +218,14 @@ body {
   height: var(--size-3);
   display: block;
   vertical-align: middle;
+}
+
+.search select {
+  max-width: 20rem;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: var(--size-5);
 }
 
 .punk-avatar {

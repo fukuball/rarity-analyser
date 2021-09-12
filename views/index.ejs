@@ -39,6 +39,12 @@
           <footer>
             <button type="submit">Search</button>
           </footer>
+          <div>
+            <select id="sorting-select" class="form-select" name="order_by">
+              <option value="rarity" <% if (orderBy=='rarity') { %> selected <% } %>>Sort By Rarity</option>
+              <option value="id" <% if (orderBy=='id') { %> selected <% } %>>Sort By ID</option>
+            </select>
+          </div>
         </form>
         <div class="row punks">
           <% if (!_.isEmpty(punks)) { %>
@@ -99,7 +105,7 @@
           <ul class="pagination justify-content-center">
             <% if (page > 1) { %>
             <li class="page-item">
-              <a class="page-link" href="/?search=<%= search %>&page=1">
+              <a class="page-link" href="/?search=<%= search %>&order_by=<%= orderBy %>&page=1">
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
@@ -115,7 +121,7 @@
               <% if (page == i) { %>
                   <li class="page-item active"><a class="page-link"><%= i %></a></li>
               <% } else { %>
-                  <li class="page-item"><a class="page-link" href="/?search=<%= search %>&page=<%= i %>"><%= i %></a></li>
+                  <li class="page-item"><a class="page-link" href="/?search=<%= search %>&order_by=<%= orderBy %>&page=<%= i %>"><%= i %></a></li>
               <% } %>
               <% if (i == (+page + 4)) { %>
                   <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
@@ -123,7 +129,7 @@
             <% } %>
             <% if (page != totalPage) { %>
               <li class="page-item">
-                <a class="page-link" href="/?search=<%= search %>&page=<%= totalPage %>">
+                <a class="page-link" href="/?search=<%= search %>&order_by=<%= orderBy %>&page=<%= totalPage %>">
                   <span aria-hidden="true">&raquo;</span>
                 </a>
               </li>
@@ -134,6 +140,17 @@
       </main>
       <%- include('./component/footer'); -%>
     </div>
-    
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const sortingSelect = document.querySelector('#sorting-select');
+      
+        if (sortingSelect) {
+          sortingSelect.addEventListener('change', async (event) => {
+            const sorting = event.target.value;
+            window.location = '/?search=<%= search %>&order_by='+sorting;
+          });
+        }
+      });
+    </script> 
   </body>
 </html>
