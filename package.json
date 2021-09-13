@@ -8,7 +8,8 @@
   "scripts": {
     "start": "NODE_ENV=production node ./bin/www",
     "start-dev": "NODE_ENV=development node-dev ./bin/www",
-    "postinstall": "node ./cmd/rarity_analyze.js"
+    "postinstall": "node ./cmd/rarity_analyze.js",
+    "rarity-analyze": "node ./cmd/rarity_analyze.js --mode=force"
   },
   "dependencies": {
     "app-root-path": "^3.0.0",
@@ -21,6 +22,7 @@
     "http-errors": "~1.6.3",
     "lodash": "^4.17.21",
     "markdown-it": "^12.2.0",
+    "minimist": "^1.2.5",
     "morgan": "~1.9.1",
     "node-dev": "^7.0.0"
   },

@@ -4,12 +4,19 @@ const collectionData = require(appRoot + '/config/' + config.collection_file_nam
 const fs = require('fs');
 const Database = require('better-sqlite3');
 const _ = require('lodash');
+const argv = require('minimist')(process.argv.slice(2),{
+    string: ['mode'],
+});
+
+let mode = argv['mode'];
 
 const databasePath = appRoot + '/config/' + config.sqlite_file_name;
 
-if (fs.existsSync(databasePath)) {
-    console.log("Database exist.");
-    return;
+if (mode != 'force') { 
+    if (fs.existsSync(databasePath)) {
+        console.log("Database exist.");
+        return;
+    }
 }
 
 fs.writeFileSync(databasePath, '', { flag: 'w' });
