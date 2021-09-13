@@ -101,17 +101,17 @@ If you have any update want to deploy to Heroku, just use this final step to dep
 
 ### Hackathon Tasks
 
-- [V] The app lets the deployer configure a collection json file like this one: [collection.json](https://github.com/fukuball/rarity-analyser/blob/main/config/collection.json)
-- [V] Take all metadata items and analyse their `attributes`.
-- [V] Derive a rarity score for each attribute of each NFT item. Example: Property "Type", Attribute "Ape"; 24 of 10000 have this attribute/property combination; `rarity_score = 1/(24/10000) = 416.67`
-- [V] Derive a rarity score for each NFT in the collection. The rarity score for each NFT is the **sum of all attributes**.
-- [V] Account for missing `trait_type`s of an NFT.
-- [V] Account for the `trait_count` of an NFT.
-- [V] Calculate the Rarity Score for each token (SUM of all rare trait attributes / missing traits / trait counts).
+- [X] The app lets the deployer configure a collection json file like this one: [collection.json](https://github.com/fukuball/rarity-analyser/blob/main/config/collection.json)
+- [X] Take all metadata items and analyse their `attributes`.
+- [X] Derive a rarity score for each attribute of each NFT item. Example: Property "Type", Attribute "Ape"; 24 of 10000 have this attribute/property combination; `rarity_score = 1/(24/10000) = 416.67`
+- [X] Derive a rarity score for each NFT in the collection. The rarity score for each NFT is the **sum of all attributes**.
+- [X] Account for missing `trait_type`s of an NFT.
+- [X] Account for the `trait_count` of an NFT.
+- [X] Calculate the Rarity Score for each token (SUM of all rare trait attributes / missing traits / trait counts).
 - [ ] Compute and store a `collection-rarities.json` file which can be exported for use elsewhere for the given collection.
 
 ### Additional Tasks
 
-- [V] Search by ID and sort by rarity or ID.
-- [V] Put OpenSea link and PunkScape link.
+- [X] Search by ID and sort by rarity or ID.
+- [X] Put OpenSea link and PunkScape link.
 - [ ] Endpoint of JSON rarity data for every punk.
