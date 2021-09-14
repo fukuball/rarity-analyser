@@ -332,6 +332,7 @@ a:hover .punk-info svg:not(.shadow) {
   border-radius: 7px;
   text-align: center;
   width: 70px;
+  min-width: 70px;
   height: 30px;
   line-height: 30px;
   font-size: var(--font-size-md);

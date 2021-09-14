@@ -108,7 +108,7 @@ collectionData.forEach(element => {
 
         // Trait detail type
         if (!traitDetailTypeCount.hasOwnProperty(attribute.value)) {
-            insertTraitDetailTypeStmt.run(traitDetailTypeId, traitTypeIdMap[attribute.trait_type], _.startCase(attribute.value), 0);
+            insertTraitDetailTypeStmt.run(traitDetailTypeId, traitTypeIdMap[attribute.trait_type], attribute.value, 0);
             traitDetailTypeIdMap[attribute.value] = traitDetailTypeId;
             traitDetailTypeId = traitDetailTypeId + 1;
             traitDetailTypeCount[attribute.value] = 0 + 1;
