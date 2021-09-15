@@ -70,6 +70,16 @@ $ DEBUG=rarity-analyser:* yarn start-dev
 
 Then open: http://localhost:3000/ on your web browser. Yes! Now you see the rarity website of your NFT collection!
 
+### Extra
+
+You can generate `collection-rarities.json` file by using this command:
+
+```
+yarn rarity-output-json
+```
+
+The `collection-rarities.json` file will store in `config` folder.
+
 ## Deploy to Heroku
 
 ### Step 1: Prerequisites
@@ -108,7 +118,7 @@ If you have any update want to deploy to Heroku, just use this final step to dep
 - [X] Account for missing `trait_type`s of an NFT.
 - [X] Account for the `trait_count` of an NFT.
 - [X] Calculate the Rarity Score for each token (SUM of all rare trait attributes / missing traits / trait counts).
-- [ ] Compute and store a `collection-rarities.json` file which can be exported for use elsewhere for the given collection.
+- [X] Compute and store a `collection-rarities.json` file which can be exported for use elsewhere for the given collection.
 
 ### Additional Tasks
 
