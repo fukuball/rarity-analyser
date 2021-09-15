@@ -114,4 +114,4 @@ If you have any update want to deploy to Heroku, just use this final step to dep
 
 - [X] Search by ID and sort by rarity or ID.
 - [X] Put OpenSea link and PunkScape link.
-- [ ] Endpoint of JSON rarity data for every punk.
+- [X] Endpoint of JSON rarity data for every punk.
