@@ -25,7 +25,8 @@
     "markdown-it": "^12.2.0",
     "minimist": "^1.2.5",
     "morgan": "~1.9.1",
-    "node-dev": "^7.0.0"
+    "node-dev": "^7.0.0",
+    "sync-request": "^6.1.0"
   },
   "engines": {
     "node": "14.x"

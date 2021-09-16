@@ -3,7 +3,7 @@
     <h3 class="punk-rank">Rank #<%= punk.rarity_rank %></h3>
     <img class="punk-avatar" src="<%= punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'); %>" alt="<%= punk.name %>" />
     <div class="punk-info text-center">
-      <span style="font-size: var(--font-size-md); color: var(--white); text-decoration: none;"><%= punk.name %></span>
+      <span><%= punk.name %></span>
       <svg 
         viewBox="0 0 128 20" 
         class="shadow"

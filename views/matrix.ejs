@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <%- include('./component/meta', {title: title, ogUrl: ogUrl, ogImage: ogImage}); -%>
+  </head>
+  <body class="d-flex text-white bg-dark" style="min-height: 100%;">
+    
+    <div class="container d-flex w-100 p-3 mx-auto flex-column" style="min-height: 100%; max-width: 72em;">
+      <%- include('./component/header'); -%>
+      <main class="px-3" style="min-height: 100%;">
+      </main>
+      <%- include('./component/footer'); -%>
+    </div>
+  </body>
+</html>

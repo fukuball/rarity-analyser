@@ -68,12 +68,22 @@ router.get('/', function(req, res, next) {
     title: config.app_name,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
     ogImage: config.main_og_image,
+    activeTab: 'rarity',
     punks: punks, 
     totalPage: totalPage, 
     search: search, 
     orderBy, orderBy, 
     page: page,
      _:_ 
+  });
+});
+
+router.get('/matrix', function(req, res, next) {
+  res.render('matrix', {
+    title: config.app_name,
+    ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
+    ogImage: config.main_og_image,
+    activeTab: 'matrix',
   });
 });
 

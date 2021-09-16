@@ -49,10 +49,12 @@ router.get('/:id', function(req, res, next) {
   if (!_.isEmpty(punk)) {
     title = punk.name;
   }
+  
   res.render('punk', { 
     title: title,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
     ogImage: punk ? punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'): config.main_og_image,
+    activeTab: 'rarity',
     punk: punk, 
     punkScore: punkScore, 
     allTraitTypes: allTraitTypes, 

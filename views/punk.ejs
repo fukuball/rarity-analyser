@@ -16,25 +16,29 @@
                 <h3 class="punk-rank">Rank #<%= punk.rarity_rank %></h3>
                 <img class="punk-avatar" src="<%= punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'); %>" alt="<%= punk.name %>" />
                 <div class="punk-info text-center mt-4">
-                  <span style="font-size: var(--font-size-md); color: var(--white); text-decoration: none;"><%= punk.name %></span>
+                  <span><%= punk.name %></span>
                 </div>
               </div>
               <div class="mt-3 mb-3">
-                <div style="line-height: 1.2rem;">
+                <div class="punk-description">
                   <%- md.render(punk.description) %>
                 </div>
+                <% if (!_.isEmpty(collection_contract_address)) { %>
                 <a class="view-on-link" href="https://opensea.io/assets/<%= collection_contract_address %>/<%= punk.id %>" target="_blank">
                   <div class="view-on-block text-center">
                     <img class="view-on-icon" src="/images/opensea.svg">
                     View on OpenSea
                   </div>
                 </a>
+                <% } %>
+                <% if (!_.isEmpty(punk.external_url)) { %>
                 <a class="view-on-link" href="<%= punk.external_url %>" target="_blank">
                   <div class="view-on-block text-center">
                     <img class="view-on-icon" src="/images/profile@32w.png">
-                    View on PunkScape
+                    View on Official Site
                   </div>
                 </a>
+                <% } %>
                 <a class="view-on-link" href="/punk/<%= punk.id %>/json" target="_blank">
                   <div class="view-on-block text-center">
                     <img class="view-on-icon" src="/images/code.png">
@@ -54,9 +58,9 @@
                 <div class="mt-4">
                   <div class="row">
                     <div class="col-6">
-                      <h3 style="font-size: var(--font-size-md);"><%= traitType.trait_type %></h3>
+                      <h3 class="trait-type"><%= traitType.trait_type %></h3>
                     </div>
-                    <div class="col-6 success" style="text-align: right; color: var(--primary); font-size: var(--font-size-lg);">
+                    <div class="col-6 trait-type-rarity">
                       +<%= punkScore['trait_type_'+traitType.id+'_rarity'].toFixed(2) %>
                     </div>
                   </div>
@@ -81,9 +85,9 @@
               <div class="mt-4">
                 <div class="row">
                   <div class="col-6">
-                    <h3 style="font-size: var(--font-size-md);">Attribute Count</h3>
+                    <h3 class="trait-type">Attribute Count</h3>
                   </div>
-                  <div class="col-6 success" style="text-align: right; color: var(--primary); font-size: var(--font-size-lg);">
+                  <div class="col-6 trait-type-rarity">
                     +<%= punkScore['trait_count_rarity'].toFixed(2) %>
                   </div>
                 </div>

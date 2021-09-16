@@ -269,6 +269,16 @@ a:hover .punk-info svg:not(.shadow) {
   transform: rotate(9deg) !important; 
 }
 
+.punk-info span {
+  font-size: var(--font-size-md); 
+  color: var(--white); 
+  text-decoration: none;
+}
+
+.punk-description {
+  line-height: 1.2rem;
+}
+
 .punk-rank {
   color: var(--white); 
   font-family: var(--font-family-title);
@@ -311,6 +321,16 @@ a:hover .punk-info svg:not(.shadow) {
   padding: 20px;
   border-radius: 10px;
   background-color: var(--semi-primary);
+}
+
+.trait-type {
+  font-size: var(--font-size-md);
+}
+
+.trait-type-rarity {
+  text-align: right; 
+  color: var(--primary); 
+  font-size: var(--font-size-lg);
 }
 
 .trait-value-block {

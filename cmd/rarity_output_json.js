@@ -11,11 +11,11 @@ if (!fs.existsSync(databasePath)) {
 }
 
 const db = new Database(databasePath);
-const outptuPath = appRoot + '/config/collection-rarities.json';
+const outputPath = appRoot + '/config/collection-rarities.json';
 
-fs.truncateSync(outptuPath);
+fs.truncateSync(outputPath);
 
-const logger = fs.createWriteStream(outptuPath, {
+const logger = fs.createWriteStream(outputPath, {
   flags: 'a'
 });
 
