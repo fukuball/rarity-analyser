@@ -88,4 +88,53 @@ router.get('/:id/json', function(req, res, next) {
   }));
 });
 
+router.get('/:id/similar', function(req, res, next) {
+  let punkId = req.params.id;
+
+  let punk = db.prepare('SELECT punks.*, punk_scores.rarity_rank FROM punks INNER JOIN punk_scores ON (punks.id = punk_scores.punk_id) WHERE punks.id = ?').get(punkId);
+  let punkScore = db.prepare('SELECT punk_scores.* FROM punk_scores WHERE punk_scores.punk_id = ?').get(punkId);
+  let allTraitTypes = db.prepare('SELECT trait_types.* FROM trait_types').all();
+  let similarCondition = '';
+  let similarTo = {};
+  allTraitTypes.forEach(traitType => {
+    similarCondition = similarCondition + 'IIF(punk_scores.trait_type_'+traitType.id+'_percentile = :trait_type_'+traitType.id+', 1, 0) + ';
+    similarTo['trait_type_'+traitType.id] = punkScore['trait_type_'+traitType.id+'_percentile'];
+  });
+  similarTo['trait_count'] = punkScore['trait_count'];
+  similarTo['this_punk_id'] = punkId;
+
+  let similarPunks = db.prepare(`
+    SELECT
+      punks.*,
+      punk_scores.punk_id, 
+      (
+        ` 
+        + similarCondition +
+        `
+        IIF(punk_scores.trait_count = :trait_count, 1, 0)
+      )
+      similar 
+    FROM punk_scores  
+    INNER JOIN punks ON (punk_scores.punk_id = punks.id)
+    WHERE punk_scores.punk_id != :this_punk_id
+    ORDER BY similar desc
+    LIMIT 12
+    `).all(similarTo);
+
+  let title = config.app_name;
+  if (!_.isEmpty(punk)) {
+    title = punk.name;
+  }
+
+  res.render('similar_punks', { 
+    title: title,
+    ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
+    ogImage: punk ? punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'): config.main_og_image,
+    activeTab: 'rarity',
+    punk: punk,
+    similarPunks: similarPunks,
+    _: _
+  });
+});
+
 module.exports = router;

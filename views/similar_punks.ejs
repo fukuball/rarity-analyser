@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <%- include('./component/meta', {title: title, ogUrl: ogUrl, ogImage: ogImage}); -%>
+  </head>
+  <body class="d-flex text-white bg-dark" style="min-height: 100%;">
+    
+    <div class="container d-flex w-100 p-3 mx-auto flex-column" style="min-height: 100%; max-width: 72em;">
+      <%- include('./component/header'); -%>
+      <main class="px-3" style="min-height: 100%;">
+        <div style="max-width: 42rem; margin-left: auto; margin-right: auto;">
+          <div class="row">
+          <% if (!_.isEmpty(punk)) { %>
+            <h1 class="heading upper text-center">Simiar to</h1>
+            <div class="d-flex justify-content-center">
+              <div class="col-lg-3 col-md-4 col-sm-6 col-6" style="padding-left: 30px; padding-right: 30px;">
+                <%- include('./component/punk', {punk: punk}); -%>
+              </div>
+            </div>
+            <hr class="mt-5 mb-5">
+            <% similarPunks.forEach(function(similarPunk) { %>
+              <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-5" style="padding-left: 30px; padding-right: 30px;">
+                <%- include('./component/punk', {punk: similarPunk}); -%>
+              </div>
+            <% }); %>
+          <% } else { %>
+            <h1 class="text-center" style="margin-top: 5rem;">
+              There's no result about this ID
+            </h1>
+          <% } %>
+          </div>
+        </div>
+      </main>
+      <%- include('./component/footer'); -%>
+    </div>
+  </body>
+</html>
