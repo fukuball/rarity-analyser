@@ -4,7 +4,7 @@ const request = require('sync-request');
 
 const outputPath = appRoot + '/config/bayc_collection.json';
 
-let from = 1187;
+let from = 5997;
 /*if (fs.existsSync(outputPath)) {
     return;
 }*/

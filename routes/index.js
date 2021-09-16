@@ -74,16 +74,25 @@ router.get('/', function(req, res, next) {
     search: search, 
     orderBy, orderBy, 
     page: page,
-     _:_ 
+    _:_ 
   });
 });
 
 router.get('/matrix', function(req, res, next) {
+
+  let allTraits = db.prepare('SELECT trait_types.trait_type, trait_detail_types.trait_detail_type, trait_detail_types.punk_count FROM trait_detail_types INNER JOIN trait_types ON (trait_detail_types.trait_type_id = trait_types.id) ORDER BY trait_detail_types.trait_type_id, trait_detail_types.id').all();
+  let allTraitCounts = db.prepare('SELECT * FROM punk_trait_counts ORDER BY trait_count').all();
+  let totalPunkCount = db.prepare('SELECT COUNT(id) as punk_total FROM punks').get().punk_total;
+
   res.render('matrix', {
     title: config.app_name,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
     ogImage: config.main_og_image,
     activeTab: 'matrix',
+    allTraits: allTraits,
+    allTraitCounts: allTraitCounts,
+    totalPunkCount: totalPunkCount,
+    _:_ 
   });
 });
 

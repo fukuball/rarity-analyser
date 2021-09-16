@@ -8,6 +8,41 @@
     <div class="container d-flex w-100 p-3 mx-auto flex-column" style="min-height: 100%; max-width: 72em;">
       <%- include('./component/header'); -%>
       <main class="px-3" style="min-height: 100%;">
+        <h1 class="heading upper text-center">Total</h1>
+        <h1 class="superbig upper text-center"><%= totalPunkCount %></h1>
+        <hr class="mt-5 mb-5">
+        <h1 class="heading upper text-center">Trait Type Matrix</h1>
+        <div class="d-flex flex-wrap justify-content-center">
+            <% if (!_.isEmpty(allTraits)) { %>
+                <% allTraits.forEach(function(allTrait) { %>
+                <div class="tile">
+                    <h4><%= allTrait.trait_type %></h4>
+                    <h5 class="mt-3 mb-3"><%= allTrait.trait_detail_type %></h5>
+                    <p><%= ((allTrait.punk_count/totalPunkCount)*100).toFixed(2) %>% have this trait</p>
+                </div>
+                <% }); %>
+            <% } else { %>
+            <h2 class="text-center">
+                There's no result
+            </h2>
+            <% } %>
+        </div>
+        <hr class="mt-5 mb-5">
+        <h1 class="heading upper text-center">Trait Count Matrix</h1>
+        <div class="d-flex flex-wrap justify-content-center">
+            <% if (!_.isEmpty(allTraitCounts)) { %>
+                <% allTraitCounts.forEach(function(traitCount) { %>
+                <div class="tile">
+                    <h4><%= traitCount.trait_count %></h4>
+                    <p><%= ((traitCount.punk_count/totalPunkCount)*100).toFixed(2) %>% is <%= traitCount.trait_count %> traits</p>
+                </div>
+                <% }); %>
+            <% } else { %>
+            <h2 class="text-center">
+                There's no result
+            </h2>
+            <% } %>
+        </div>
       </main>
       <%- include('./component/footer'); -%>
     </div>

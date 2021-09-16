@@ -146,6 +146,15 @@ body {
   margin: var(--size-4) 0;
 }
 
+.heading {
+  font-size: var(--font-size-xxl);
+  font-family: var(--font-family-title);
+  font-weight: 700;
+  font-style: italic;
+  line-height: var(--line-height-heading);
+  margin: var(--size-4) 0;
+}
+
 .search {
   margin: var(--size-6) 0;
 }
@@ -383,4 +392,34 @@ a:hover .punk-info svg:not(.shadow) {
 .view-on-link, .view-on-link:hover {
   color: var(--white);
   text-decoration: none;
+}
+
+.tile {
+  width: 135px;
+  background-color: var(--primary-dark); 
+  border-radius: 10px;
+  color: var(--white);
+  font-size: var(--font-size-lg);
+  margin: 10px;
+  overflow: scroll;
+  padding: 20px 10px;
+}
+
+.tile h5, .tile h4 {
+  font-family: var(--font-family-title);
+  text-align: center;
+}
+
+.tile p {
+  font-family: var(--font-family-body);
+  text-align: center;
+  font-size: var(--font-size-sm);
+}
+
+.tile h5 {
+  font-size: var(--font-size-base);
+}
+
+.tile h4 {
+  font-size: var(--font-size-md);
 }
