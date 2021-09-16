@@ -3,6 +3,9 @@
     <% if (punk.rarity_rank) { %>
     <h3 class="punk-rank">Rank #<%= punk.rarity_rank %></h3>
     <% } %>
+    <% if (punk.similar) { %>
+    <h3 class="punk-similar-score">Simiar Score #<%= punk.similar.toFixed(2) %></h3>
+    <% } %>
     <img class="punk-avatar" src="<%= punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'); %>" alt="<%= punk.name %>" />
     <div class="punk-info text-center">
       <span><%= punk.name %></span>

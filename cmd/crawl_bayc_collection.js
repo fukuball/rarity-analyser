@@ -4,10 +4,14 @@ const request = require('sync-request');
 
 const outputPath = appRoot + '/config/bayc_collection.json';
 
-let from = 5997;
-/*if (fs.existsSync(outputPath)) {
+if (fs.existsSync(outputPath)) {
+    let collectionData = require(outputPath);
+    console.log(collectionData.length);
     return;
-}*/
+}
+
+/*
+let from = 0;
 
 fs.appendFileSync(outputPath, "[\n");
 
@@ -25,3 +29,4 @@ for (i = from; i < 10000; i++) {
 }
 
 fs.appendFileSync(outputPath, "]");
+*/
