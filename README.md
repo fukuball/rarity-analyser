@@ -96,7 +96,7 @@ $ heroku login
 ```
 
 ```
-$ heroku create
+$ heroku create your_app_name
 ```
 
 ### Final Step: Deploy

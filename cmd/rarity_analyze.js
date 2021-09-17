@@ -85,7 +85,25 @@ let insertTraitTypeStmt = db.prepare("INSERT INTO trait_types VALUES (?, ?, ?)")
 let insertTraitDetailTypeStmt = db.prepare("INSERT INTO trait_detail_types VALUES (?, ?, ?, ?)");
 let insertPuntTraitStmt = db.prepare("INSERT INTO punk_traits VALUES (?, ?, ?, ?)");
 
+let count1 = 0;
 collectionData.forEach(element => {
+
+    if (_.isEmpty(element.id)) {
+        element['id'] = count1;
+    }
+    if (_.isEmpty(element.name)) {
+        element['name'] = config.collection_name + ' #' + count1;
+    }
+    if (_.isEmpty(element.description)) {
+        element['description'] = '';
+    }
+    if (_.isEmpty(element.external_url)) {
+        element['external_url'] = '';
+    }
+    if (_.isEmpty(element.animation_url)) {
+        element['animation_url'] = '';
+    }
+
     console.log("Prepare punk: #" + element.id);
     
     insertPunkStmt.run(element.id, element.name, element.description, element.image, element.external_url, element.animation_url);
@@ -129,6 +147,7 @@ collectionData.forEach(element => {
     }
 
     totalPunk = totalPunk + 1;
+    count1 = count1 + 1;
 });
 
 console.log(traitTypeCount);
@@ -175,7 +194,13 @@ insertPunkScoreStmt = insertPunkScoreStmt + ":trait_count,  :trait_count_percent
 db.exec(createScoreTableStmt);
 insertPunkScoreStmt = db.prepare(insertPunkScoreStmt);
 
+let count2 = 0;
 collectionData.forEach(element => {
+    
+    if (_.isEmpty(element.id)) {
+        element['id'] = count2;
+    }
+
     console.log("Analyze punk: #" + element.id);
 
     let thisPunkTraitTypes = _.compact(_.map(element.attributes, 'trait_type'));
@@ -223,13 +248,19 @@ collectionData.forEach(element => {
     insertPunkScoreStmt.run(punkScore);
 
     punkScoreId = punkScoreId + 1;
+    count2 = count2 + 1;
 });
 
 const punkScoreStmt = db.prepare('SELECT rarity_sum FROM punk_scores WHERE punk_id = ?');
 const punkRankStmt = db.prepare('SELECT COUNT(id) as higherRank FROM punk_scores WHERE rarity_sum > ?');
 let updatPunkRankStmt = db.prepare("UPDATE punk_scores SET rarity_rank = :rarity_rank WHERE punk_id = :punk_id");
 
+let count3 = 0;
 collectionData.forEach(element => {
+    if (_.isEmpty(element.id)) {
+        element['id'] = count3;
+    }
+
     console.log("Ranking punk: #" + element.id);
     let punkScore = punkScoreStmt.get(element.id);
     let punkRank = punkRankStmt.get(punkScore.rarity_sum);
@@ -237,4 +268,5 @@ collectionData.forEach(element => {
         rarity_rank: punkRank.higherRank+1,
         punk_id: element.id
     });
+    count3 = count3 + 1;
 });
