@@ -10,9 +10,9 @@ var indexRouter = require('./routes/index');
 var punksRouter = require('./routes/punks');
 
 var app = express();
-var livereload = require('easy-livereload');
 
 if (app.get('env') === 'development') {
+  var livereload = require('easy-livereload');
   app.use(livereload({
     app: app
   }));
