@@ -16,19 +16,21 @@
     "app-root-path": "^3.0.0",
     "better-sqlite3": "^7.4.3",
     "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "easy-livereload": "^1.4.3",
+    "debug": "^4.3.2",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "lodash": "^4.17.21",
     "markdown-it": "^12.2.0",
     "minimist": "^1.2.5",
-    "morgan": "~1.9.1",
-    "node-dev": "^7.0.0",
-    "sync-request": "^6.1.0"
+    "morgan": "~1.9.1"
   },
   "engines": {
     "node": "14.x"
+  },
+  "devDependencies": {
+    "easy-livereload": "^1.4.3",
+    "node-dev": "^7.0.0",
+    "sync-request": "^6.1.0"
   }
 }

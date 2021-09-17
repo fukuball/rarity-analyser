@@ -184,8 +184,8 @@ let createScoreTableStmt = "CREATE TABLE punk_scores ( id INT, punk_id INT, ";
 let insertPunkScoreStmt = "INSERT INTO punk_scores VALUES (:id, :punk_id, ";
 
 for (let i = 0; i < traitTypeId; i++) {
-    createScoreTableStmt = createScoreTableStmt + "trait_type_" + i + "_percentile DOUBLE, trait_type_" + i + "_rarity DOUBLE, ";
-    insertPunkScoreStmt = insertPunkScoreStmt + ":trait_type_" + i + "_percentile, :trait_type_" + i + "_rarity, ";
+    createScoreTableStmt = createScoreTableStmt + "trait_type_" + i + "_percentile DOUBLE, trait_type_" + i + "_rarity DOUBLE, trait_type_" + i + "_value TEXT, ";
+    insertPunkScoreStmt = insertPunkScoreStmt + ":trait_type_" + i + "_percentile, :trait_type_" + i + "_rarity, :trait_type_" + i + "_value, ";
 }
 
 createScoreTableStmt = createScoreTableStmt + "trait_count INT,  trait_count_percentile DOUBLE, trait_count_rarity DOUBLE, rarity_sum DOUBLE, rarity_rank INT)";
@@ -228,6 +228,7 @@ collectionData.forEach(element => {
             let traitTypeId = traitTypeIdMap[traitType];
             punkScore['trait_type_' + traitTypeId + '_percentile'] = thisTraitDetailTypeCount/totalPunk;
             punkScore['trait_type_' + traitTypeId + '_rarity'] = totalPunk/thisTraitDetailTypeCount;
+            punkScore['trait_type_' + traitTypeId + '_value'] = traitDetailType;
             raritySum = raritySum + totalPunk/thisTraitDetailTypeCount;
         } else {   
             // missing trait
@@ -235,6 +236,7 @@ collectionData.forEach(element => {
             let traitTypeId = traitTypeIdMap[traitType];
             punkScore['trait_type_' + traitTypeId + '_percentile'] = (totalPunk-thisTraitTypeCount)/totalPunk;
             punkScore['trait_type_' + traitTypeId + '_rarity'] = totalPunk/(totalPunk-thisTraitTypeCount);
+            punkScore['trait_type_' + traitTypeId + '_value'] = 'None';
             raritySum = raritySum + totalPunk/(totalPunk-thisTraitTypeCount);
         }
     }

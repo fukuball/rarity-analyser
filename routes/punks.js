@@ -45,13 +45,17 @@ router.get('/:id', function(req, res, next) {
     allTraitCountTypesData[traitCount.trait_count] = traitCount.punk_count;
   });
 
-  let title = config.app_name;
+  let title = config.collection_name + ' | ' + config.app_name;
+  let description = config.collection_description + ' | ' + config.app_description
   if (!_.isEmpty(punk)) {
-    title = punk.name;
+    title = punk.name + ' | ' + config.app_name;
   }
   
   res.render('punk', { 
-    title: title,
+    app_title: title,
+    app_description: description,
+    ogTitle: title,
+    ogDescription: description,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
     ogImage: punk ? punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'): config.main_og_image,
     activeTab: 'rarity',
@@ -97,8 +101,8 @@ router.get('/:id/similar', function(req, res, next) {
   let similarCondition = '';
   let similarTo = {};
   allTraitTypes.forEach(traitType => {
-    similarCondition = similarCondition + 'IIF(punk_scores.trait_type_'+traitType.id+'_percentile = :trait_type_'+traitType.id+', 1 * (1-punk_scores.trait_type_'+traitType.id+'_percentile), 0) + ';
-    similarTo['trait_type_'+traitType.id] = punkScore['trait_type_'+traitType.id+'_percentile'];
+    similarCondition = similarCondition + 'IIF(punk_scores.trait_type_'+traitType.id+'_value = :trait_type_'+traitType.id+', 1 * (1-punk_scores.trait_type_'+traitType.id+'_percentile), 0) + ';
+    similarTo['trait_type_'+traitType.id] = punkScore['trait_type_'+traitType.id+'_value'];
   });
   similarTo['trait_count'] = punkScore['trait_count'];
   similarTo['this_punk_id'] = punkId;
@@ -121,13 +125,17 @@ router.get('/:id/similar', function(req, res, next) {
     LIMIT 12
     `).all(similarTo);
 
-  let title = config.app_name;
+  let title = config.collection_name + ' | ' + config.app_name;
+  let description = config.collection_description + ' | ' + config.app_description
   if (!_.isEmpty(punk)) {
-    title = punk.name;
+    title = punk.name + ' | ' + config.app_name;
   }
 
   res.render('similar_punks', { 
-    title: title,
+    app_title: title,
+    app_description: description,
+    ogTitle: title,
+    ogDescription: description,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
     ogImage: punk ? punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'): config.main_og_image,
     activeTab: 'rarity',

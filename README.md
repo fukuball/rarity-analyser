@@ -6,6 +6,8 @@ Cool Rarity was born in a [Hackathon](https://github.com/punkscape/01-rarity-ana
 
 Here's the demo, One Day Punk rarity website: [https://onedaypunk-rarity-tool.herokuapp.com/](https://onedaypunk-rarity-tool.herokuapp.com/)
 
+And another demo, BAYC rarity website: [https://bayc-rarity.herokuapp.com/](https://bayc-rarity.herokuapp.com/)
+
 ## Prerequisites
 
 Cool Rarity was built using Node.js, so you have to install:
@@ -37,9 +39,11 @@ Here's the content of `config.js`:
 ```
 {
     app_name: 'Cool Rarity',
+    app_description: 'A cool rarity tool.',
     collection_file_name: 'collection.json',
     collection_contract_address: '0x5537d90a4a2dc9d9b37bab49b490cf67d4c54e91',
     collection_name: '10k One Day Punks',
+    collection_description: '10k "One Day I\'ll Be A Punk"-punks – a homage to the one and only CryptoPunks. Holding a OneDayPunk will give you early access to PunkScapes and reserve a profile on the PunkScape website.',
     sqlite_file_name: 'database.sqlite',
     ga: 'G-BW69Z04YTP',
     main_og_image: 'https://onedaypunk-rarity-tool.herokuapp.com/images/og.png'
@@ -106,6 +110,14 @@ $ git push heroku main
 ```
 
 If you have any update want to deploy to Heroku, just use this final step to deploy to Heroku.
+
+### Use One Click Heroku Deploy
+
+Here you can deploy this rarity tool to Heroku in one click, just be sure you have the Heroku account.
+
+<a href="https://heroku.com/deploy?template=https://github.com/fukuball/rarity-analyser" target="_blank">
+  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
+</a>
 
 ## Tasks
 
