@@ -34,7 +34,7 @@
                 <% allTraitCounts.forEach(function(traitCount) { %>
                 <div class="tile">
                     <h4><%= traitCount.trait_count %></h4>
-                    <p><%= ((traitCount.punk_count/totalPunkCount)*100).toFixed(2) %>% is <%= traitCount.trait_count %> traits</p>
+                    <p><%= ((traitCount.punk_count/totalPunkCount)*100).toFixed(2) %>% have <%= traitCount.trait_count %> traits</p>
                 </div>
                 <% }); %>
             <% } else { %>
