@@ -51,7 +51,8 @@ router.get('/:id', function(req, res, next) {
   }
   
   res.render('punk', { 
-    title: title,
+    app_title: title,
+    app_description: config.app_description,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
     ogImage: punk ? punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'): config.main_og_image,
     activeTab: 'rarity',
@@ -127,7 +128,8 @@ router.get('/:id/similar', function(req, res, next) {
   }
 
   res.render('similar_punks', { 
-    title: title,
+    app_title: title,
+    app_description: config.app_description,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
     ogImage: punk ? punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'): config.main_og_image,
     activeTab: 'rarity',
