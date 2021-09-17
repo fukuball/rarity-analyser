@@ -109,6 +109,14 @@ $ git push heroku main
 
 If you have any update want to deploy to Heroku, just use this final step to deploy to Heroku.
 
+### Use One Click Heroku Deploy
+
+Here you can deploy this rarity tool to Heroku in one click, just be sure you have the Heroku account.
+
+<a href="https://heroku.com/deploy?template=https://github.com/fukuball/rarity-analyser">
+  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
+</a>
+
 ## Tasks
 
 ### Hackathon Tasks
