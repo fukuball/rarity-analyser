@@ -26,7 +26,8 @@
     "minimist": "^1.2.5",
     "morgan": "~1.9.1",
     "node-dev": "^7.0.0",
-    "sync-request": "^6.1.0"
+    "sync-request": "^6.1.0",
+    "ws": "^5.2.3"
   },
   "engines": {
     "node": "14.x"
