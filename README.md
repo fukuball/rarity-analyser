@@ -123,5 +123,8 @@ If you have any update want to deploy to Heroku, just use this final step to dep
 ### Additional Tasks
 
 - [X] Search by ID and sort by rarity or ID.
-- [X] Put OpenSea link and PunkScape link.
+- [X] Put OpenSea link and offlicial site link.
 - [X] Endpoint of JSON rarity data for every punk.
+- [X] Test with other ERC721 collection metadata.
+- [X] Matrix page.
+- [X] Similarity analysis, create one page to show top 12 similar for every punk.
