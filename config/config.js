@@ -5,7 +5,7 @@ const config = {
     collection_name: 'The Bored Ape Yacht Club',
     sqlite_file_name: 'database.sqlite',
     ga: 'G-BW69Z04YTP',
-    main_og_image: 'https://onedaypunk-rarity-tool.herokuapp.com/images/og.png'
+    main_og_image: 'https://ipfs.io/ipfs/QmZAnAuhbwnPa2g5mfAnEKupChPgUM9VXB7USDVsBUnvYU'
 };
 
 module.exports = config;
