@@ -45,14 +45,17 @@ router.get('/:id', function(req, res, next) {
     allTraitCountTypesData[traitCount.trait_count] = traitCount.punk_count;
   });
 
-  let title = config.app_name;
+  let title = config.collection_name + ' | ' + config.app_name;
+  let description = config.collection_description + ' | ' + config.app_description
   if (!_.isEmpty(punk)) {
-    title = punk.name;
+    title = punk.name + ' | ' + config.app_name;
   }
   
   res.render('punk', { 
     app_title: title,
-    app_description: config.app_description,
+    app_description: description,
+    ogTitle: title,
+    ogDescription: description,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
     ogImage: punk ? punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'): config.main_og_image,
     activeTab: 'rarity',
@@ -122,14 +125,17 @@ router.get('/:id/similar', function(req, res, next) {
     LIMIT 12
     `).all(similarTo);
 
-  let title = config.app_name;
+  let title = config.collection_name + ' | ' + config.app_name;
+  let description = config.collection_description + ' | ' + config.app_description
   if (!_.isEmpty(punk)) {
-    title = punk.name;
+    title = punk.name + ' | ' + config.app_name;
   }
 
   res.render('similar_punks', { 
     app_title: title,
-    app_description: config.app_description,
+    app_description: description,
+    ogTitle: title,
+    ogDescription: description,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
     ogImage: punk ? punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'): config.main_og_image,
     activeTab: 'rarity',

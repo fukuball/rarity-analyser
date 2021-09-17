@@ -67,6 +67,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { 
     app_title: config.app_name,
     app_description: config.app_description,
+    ogTitle: config.collection_name + ' | ' + config.app_name,
+    ogDescription: config.collection_description + ' | ' + config.app_description,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
     ogImage: config.main_og_image,
     activeTab: 'rarity',
@@ -88,6 +90,8 @@ router.get('/matrix', function(req, res, next) {
   res.render('matrix', {
     app_title: config.app_name,
     app_description: config.app_description,
+    ogTitle: config.collection_name + ' | ' + config.app_name,
+    ogDescription: config.collection_description + ' | ' + config.app_description,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
     ogImage: config.main_og_image,
     activeTab: 'matrix',
