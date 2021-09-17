@@ -1,8 +1,8 @@
 const config = {
-    app_name: 'Cool Rarity',
-    collection_file_name: 'collection.json',
-    collection_contract_address: '0x5537d90a4a2dc9d9b37bab49b490cf67d4c54e91',
-    collection_name: '10k One Day Punks',
+    app_name: 'BAYC Rarity',
+    collection_file_name: 'bayc_collection.json',
+    collection_contract_address: '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D',
+    collection_name: 'The Bored Ape Yacht Club',
     sqlite_file_name: 'database.sqlite',
     ga: 'G-BW69Z04YTP',
     main_og_image: 'https://onedaypunk-rarity-tool.herokuapp.com/images/og.png'
