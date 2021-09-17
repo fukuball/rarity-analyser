@@ -101,8 +101,8 @@ router.get('/:id/similar', function(req, res, next) {
   let similarCondition = '';
   let similarTo = {};
   allTraitTypes.forEach(traitType => {
-    similarCondition = similarCondition + 'IIF(punk_scores.trait_type_'+traitType.id+'_percentile = :trait_type_'+traitType.id+', 1 * (1-punk_scores.trait_type_'+traitType.id+'_percentile), 0) + ';
-    similarTo['trait_type_'+traitType.id] = punkScore['trait_type_'+traitType.id+'_percentile'];
+    similarCondition = similarCondition + 'IIF(punk_scores.trait_type_'+traitType.id+'_value = :trait_type_'+traitType.id+', 1 * (1-punk_scores.trait_type_'+traitType.id+'_percentile), 0) + ';
+    similarTo['trait_type_'+traitType.id] = punkScore['trait_type_'+traitType.id+'_value'];
   });
   similarTo['trait_count'] = punkScore['trait_count'];
   similarTo['this_punk_id'] = punkId;
