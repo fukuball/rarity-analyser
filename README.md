@@ -6,6 +6,8 @@ Cool Rarity was born in a [Hackathon](https://github.com/punkscape/01-rarity-ana
 
 Here's the demo, One Day Punk rarity website: [https://onedaypunk-rarity-tool.herokuapp.com/](https://onedaypunk-rarity-tool.herokuapp.com/)
 
+And another demo, BAYC rarity website: [https://bayc-rarity.herokuapp.com/](https://bayc-rarity.herokuapp.com/)
+
 ## Prerequisites
 
 Cool Rarity was built using Node.js, so you have to install:
