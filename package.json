@@ -16,6 +16,7 @@
     "app-root-path": "^3.0.0",
     "better-sqlite3": "^7.4.3",
     "cookie-parser": "~1.4.4",
+    "debug": "^4.3.2",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
@@ -28,7 +29,6 @@
     "node": "14.x"
   },
   "devDependencies": {
-    "debug": "^4.3.2",
     "easy-livereload": "^1.4.3",
     "node-dev": "^7.0.0",
     "sync-request": "^6.1.0"
