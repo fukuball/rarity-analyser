@@ -23,7 +23,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-2" style="padding-left: 30px; padding-right: 30px;">
               <div>
                 <h3 class="punk-rank">Rank #<%= punk.rarity_rank %></h3>
-                <img class="punk-avatar" src="<%= punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'); %>" alt="<%= punk.name %>" />
+                <img class="punk-avatar" style="<% if (content_image_frame=='rectangle') { %> border-radius: 10px; <% } %>" src="<%= punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'); %>" alt="<%= punk.name %>" />
                 <div class="punk-info text-center mt-4">
                   <span><%= punk.name %></span>
                 </div>

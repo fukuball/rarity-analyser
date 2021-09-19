@@ -7,7 +7,8 @@ const config = {
     collection_description: 'CryptoPochis are mysterious creatures that capture different emotions in your daily life. Their faces speak for themselves. They simply lie on the ground and play all day. We catch and wrap them as NFTs for you to play with.',
     sqlite_file_name: 'database.sqlite',
     ga: 'G-BW69Z04YTP',
-    main_og_image: 'https://pochi.club/images/og.png'
+    main_og_image: 'https://pochi.club/images/og.png',
+    content_image_frame: 'rectangle' // circle, rectangle
 };
 
 module.exports = config;
