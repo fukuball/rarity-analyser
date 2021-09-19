@@ -138,6 +138,7 @@ router.get('/', function(req, res, next) {
     ogImage: config.main_og_image,
     activeTab: 'rarity',
     punks: punks, 
+    totalPunkCount: totalPunkCount,
     totalPage: totalPage, 
     search: search, 
     orderBy: orderBy,
