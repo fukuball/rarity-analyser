@@ -146,6 +146,16 @@ body {
   margin: var(--size-4) 0;
 }
 
+@media (max-width: 575.98px) {
+  .superbig {
+    font-size: var(--font-size-xxl);
+    margin: var(--size-3) 0;
+  }
+  .search {
+    margin: 0 0 var(--size-3) 0;
+  }
+}
+
 .heading {
   font-size: var(--font-size-xxl);
   font-family: var(--font-family-title);
@@ -156,7 +166,7 @@ body {
 }
 
 .search {
-  margin: var(--size-6) 0;
+  margin: 0 0 var(--size-6) 0;
 }
 
 .search fieldset {
@@ -235,6 +245,20 @@ body {
   margin-left: auto;
   margin-right: auto;
   border-radius: var(--size-5);
+}
+
+.trait-fileter-btn {
+  width: 100%;
+  max-width: 20rem;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: var(--size-5);  
+}
+
+.trait-fileter-offcanvas {
+  background-color: var(--primary-dark); 
+  color: var(--white);
 }
 
 .punk-avatar {

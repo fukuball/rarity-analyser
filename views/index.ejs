@@ -3,8 +3,8 @@
   <head>
     <%- 
     include('./component/meta', {
-      app_title: app_title, 
-      app_description: app_description, 
+      appTitle: appTitle, 
+      appDescription: appDescription, 
       ogTitle: ogTitle, 
       ogDescription: ogDescription, 
       ogUrl: ogUrl, 
@@ -30,6 +30,9 @@
           <footer>
             <button type="submit">Search</button>
           </footer>
+          <a class="trait-fileter-btn btn btn-primary" data-bs-toggle="offcanvas" href="#traitFilterOffcanvas" role="button" aria-controls="offcanvasExample">
+            Trait Filter (<span id="trait-fileter-selected-num"><%= selectedTraits.length %></span>)
+          </a>
           <div>
             <select id="sorting-select" class="form-select" name="order_by">
               <option value="rarity" <% if (orderBy=='rarity') { %> selected <% } %>>Sort By Rarity</option>
@@ -37,6 +40,46 @@
             </select>
           </div>
         </form>
+        <div class="trait-fileter-offcanvas offcanvas offcanvas-start" tabindex="-1" id="traitFilterOffcanvas" aria-labelledby="traitFilterOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="traitFilterOffcanvasLabel">Select Traits</h5>
+            <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <%
+            let currentTriat = '';
+            allTraits.forEach(function(trait) { 
+            %>
+              <% 
+              if (currentTriat != trait.trait_type) {
+                if (currentTriat != '') {
+                  %>
+                  </select>
+                  <%
+                }
+              %>
+                <h4><%= trait.trait_type %></h4>
+                <select name="trait_select_<%= trait.trait_type_id %>" class="trait-select form-select mb-4">
+                  <option value="<%= trait.trait_type_id %>_All">All</option>
+                  <option value="<%= trait.trait_type_id %>_None" <% if (selectedTraits.includes(trait.trait_type_id+'_None')) { %> selected <% } %> >None</option>
+                  <option value="<%= trait.trait_type_id %>_<%= trait.trait_detail_type %>" <% if (selectedTraits.includes(trait.trait_type_id+'_'+trait.trait_detail_type)) { %> selected <% } %> ><%= trait.trait_detail_type %> (<%= trait.punk_count %>)</option>
+              <% 
+                currentTriat = trait.trait_type;
+              } else {
+              %>
+                  <option value="<%= trait.trait_type_id %>_<%= trait.trait_detail_type %>" <% if (selectedTraits.includes(trait.trait_type_id+'_'+trait.trait_detail_type)) { %> selected <% } %>><%= trait.trait_detail_type %> (<%= trait.punk_count %>)</option>
+              <%
+              }
+              %>
+            <%
+            });
+            %>
+            <% if (!_.isEmpty(allTraits)) { %>
+              </select>
+            <% } %>
+          </div>
+        </div>
+        <h3 class="mb-4">Total: <%= totalPunkCount %></h3>
         <div class="row punks">
           <% if (!_.isEmpty(punks)) { %>
             <% punks.forEach(function(punk) { %>
@@ -46,7 +89,7 @@
             <% }); %>
           <% } else { %>
           <h1 class="text-center">
-            There's no result about "<%= search %>"
+            There's no result.
           </h1>
           <% } %>
         </div>
@@ -54,7 +97,7 @@
         include('./component/paginate', {
           totalPage: totalPage, 
           page: page, 
-          path: '/?search='+search+'&order_by='+orderBy
+          path: '/?search='+search+'&traits='+traits+'&order_by='+orderBy
         }); 
         -%>
       </main>
@@ -62,14 +105,54 @@
     </div>
     <script>
       window.addEventListener('DOMContentLoaded', () => {
+
+        const traitSelects = document.querySelectorAll('.trait-select');
+
+        function getSelectedTraits() {
+          let selectedTraits = [];
+          traitSelects.forEach(function(traitSelect) {
+            if (!traitSelect.value.includes('_All')) {
+              selectedTraits.push(traitSelect.value);
+            }
+          });
+          return selectedTraits;
+        }
+
         const sortingSelect = document.querySelector('#sorting-select');
       
         if (sortingSelect) {
           sortingSelect.addEventListener('change', async (event) => {
             const sorting = event.target.value;
-            window.location = '/?search=<%= search %>&order_by='+sorting;
+            window.location = '/?search=<%= search %>&traits=<%= traits %>&order_by='+sorting;
           });
         }
+
+        if (traitSelects) {
+          traitSelects.forEach(function(traitSelect) {
+            traitSelect.addEventListener('change', async (event) => {
+              const traitSelectedValue = event.target.value;
+              let selectedNum = 0;
+              traitSelects.forEach(function(traitSelect) {
+                if (!traitSelect.value.includes('_All')) {
+                  selectedNum = selectedNum + 1;  
+                }
+              });
+              document.getElementById("trait-fileter-selected-num").innerHTML = selectedNum;
+            });
+          }); 
+        }
+
+        const traitFilterOffcanvas = document.getElementById('traitFilterOffcanvas')
+        traitFilterOffcanvas.addEventListener('hidden.bs.offcanvas', function () {
+          if (traitSelects) {
+            let selectedTraits = getSelectedTraits();
+            if (selectedTraits.length != 0) {
+              window.location = '/?search=<%= search %>&traits='+selectedTraits.join(',')+'&order_by=<%= orderBy %>';
+            } else {
+              window.location = '/?search=<%= search %>&order_by=<%= orderBy %>';
+            }
+          }
+        });
       });
     </script> 
   </body>

@@ -52,8 +52,8 @@ router.get('/:id', function(req, res, next) {
   }
   
   res.render('punk', { 
-    app_title: title,
-    app_description: description,
+    appTitle: title,
+    appDescription: description,
     ogTitle: title,
     ogDescription: description,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
@@ -132,8 +132,8 @@ router.get('/:id/similar', function(req, res, next) {
   }
 
   res.render('similar_punks', { 
-    app_title: title,
-    app_description: description,
+    appTitle: title,
+    appDescription: description,
     ogTitle: title,
     ogDescription: description,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
