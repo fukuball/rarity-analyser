@@ -60,14 +60,14 @@
               %>
                 <h4><%= trait.trait_type %></h4>
                 <select name="trait_select_<%= trait.trait_type_id %>" class="trait-select form-select mb-4">
-                  <option value="<%= trait.trait_type_id %>_all">All</option>
-                  <option value="<%= trait.trait_type_id %>_none" <% if (selectedTraits.includes(trait.trait_type_id+'_none')) { %> selected <% } %> >None</option>
-                  <option value="<%= trait.trait_type_id %>_<%= trait.trait_detail_type_id %>" <% if (selectedTraits.includes(trait.trait_type_id+'_'+trait.trait_detail_type_id)) { %> selected <% } %> ><%= trait.trait_detail_type %> (<%= trait.punk_count %>)</option>
+                  <option value="<%= trait.trait_type_id %>_All">All</option>
+                  <option value="<%= trait.trait_type_id %>_None" <% if (selectedTraits.includes(trait.trait_type_id+'_None')) { %> selected <% } %> >None</option>
+                  <option value="<%= trait.trait_type_id %>_<%= trait.trait_detail_type %>" <% if (selectedTraits.includes(trait.trait_type_id+'_'+trait.trait_detail_type)) { %> selected <% } %> ><%= trait.trait_detail_type %> (<%= trait.punk_count %>)</option>
               <% 
                 currentTriat = trait.trait_type;
               } else {
               %>
-                  <option value="<%= trait.trait_type_id %>_<%= trait.trait_detail_type_id %>" <% if (selectedTraits.includes(trait.trait_type_id+'_'+trait.trait_detail_type_id)) { %> selected <% } %>><%= trait.trait_detail_type %> (<%= trait.punk_count %>)</option>
+                  <option value="<%= trait.trait_type_id %>_<%= trait.trait_detail_type %>" <% if (selectedTraits.includes(trait.trait_type_id+'_'+trait.trait_detail_type)) { %> selected <% } %>><%= trait.trait_detail_type %> (<%= trait.punk_count %>)</option>
               <%
               }
               %>
@@ -88,7 +88,7 @@
             <% }); %>
           <% } else { %>
           <h1 class="text-center">
-            There's no result about "<%= search %>"
+            There's no result.
           </h1>
           <% } %>
         </div>
@@ -110,7 +110,7 @@
         function getSelectedTraits() {
           let selectedTraits = [];
           traitSelects.forEach(function(traitSelect) {
-            if (!traitSelect.value.includes('_all')) {
+            if (!traitSelect.value.includes('_All')) {
               selectedTraits.push(traitSelect.value);
             }
           });
@@ -132,7 +132,7 @@
               const traitSelectedValue = event.target.value;
               let selectedNum = 0;
               traitSelects.forEach(function(traitSelect) {
-                if (!traitSelect.value.includes('_all')) {
+                if (!traitSelect.value.includes('_All')) {
                   selectedNum = selectedNum + 1;  
                 }
               });
@@ -147,6 +147,8 @@
             let selectedTraits = getSelectedTraits();
             if (selectedTraits.length != 0) {
               window.location = '/?search=<%= search %>&traits='+selectedTraits.join(',')+'&order_by=<%= orderBy %>';
+            } else {
+              window.location = '/?search=<%= search %>&order_by=<%= orderBy %>';
             }
           }
         });
