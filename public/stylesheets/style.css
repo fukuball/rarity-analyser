@@ -454,3 +454,51 @@ a:hover .punk-info svg:not(.shadow) {
 .tile h4 {
   font-size: var(--font-size-md);
 }
+
+.rarity-tool-item {
+  height: 100%;
+}
+.rarity-tool-thumbnail-image {
+  width: 200px; height: 100%; object-fit: cover;
+}
+
+.card {
+  border: 0px;
+  background-color: var(--primary-dark);
+}
+
+.card .card-title {
+  color: var(--white);
+  font-size: var(--font-size-xxl);
+}
+
+.card .card-text {
+  color: var(--white);
+  font-size: var(--font-size-lg);
+  line-height: var(--font-size-xxl);
+}
+
+.card-link {
+  text-decoration: none;
+}
+
+.source-blockquote {
+  font-family: var(--font-family-body);
+  line-height: var(--font-size-xxl);
+  font-size: var(--font-size-lg);
+}
+
+.source-blockquote a {
+  text-decoration: none;
+  color: var(--primary);
+}
+
+@media (max-width: 699.98px) {
+  .rarity-tool-item {
+    height: 100%;
+    flex-direction: column;
+  }
+  .rarity-tool-thumbnail-image {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+}

@@ -6,8 +6,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var punksRouter = require('./routes/punks');
+//var indexRouter = require('./routes/index');
+//var punksRouter = require('./routes/punks');
+var indexRarityToolRouter = require('./routes/indexRarityTool');
 
 var app = express();
 
@@ -33,8 +34,10 @@ app.locals.ga_code = config.ga;
 app.locals.collection_contract_address = config.collection_contract_address;
 app.locals.collection_name = config.collection_name;
 
-app.use('/', indexRouter);
-app.use('/punk', punksRouter);
+//app.use('/', indexRouter);
+//app.use('/punk', punksRouter);
+
+app.use('/', indexRarityToolRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

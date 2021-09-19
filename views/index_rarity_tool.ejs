@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <%- 
+    include('./component/meta', {
+      appTitle: appTitle, 
+      appDescription: appDescription, 
+      ogTitle: ogTitle, 
+      ogDescription: ogDescription, 
+      ogUrl: ogUrl, 
+      ogImage: ogImage
+    }); 
+    -%>
+  </head>
+  <body class="d-flex text-white bg-dark" style="min-height: 100%;">
+    
+    <div class="container d-flex w-100 p-3 mx-auto flex-column" style="min-height: 100%; max-width: 72em;">
+      <%- include('./component/header'); -%>
+      <main class="px-3" style="min-height: 100%;">
+        <h1 class="superbig upper text-center"><%= app_name %></h1>
+        <h2 class="text-center mb-5" style="color: var(--primary);">Newest Collections Added</h2>
+        <a class="card-link" href="https://onedaypunk-rarity-tool.herokuapp.com">
+          <div class="card mb-4">
+            <div class="d-flex rarity-tool-item">
+              <div>
+                <img src="https://onedaypunk-rarity-tool.herokuapp.com/images/og.png" class="rounded-start rarity-tool-thumbnail-image">
+              </div>
+              <div class="flex-grow-1 overflow-hidden p-2">
+                <div class="card-body">
+                  <h5 class="card-title mb-3">One Day Punks</h5>
+                  <p class="card-text">
+                    10k "One Day I'll Be A Punk"-punks – a homage to the one and only CryptoPunks. Holding a OneDayPunk will give you early access to PunkScapes and reserve a profile on the PunkScape website.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a class="card-link" href="https://bayc-rarity.herokuapp.com">
+          <div class="card mb-4">
+            <div class="d-flex rarity-tool-item">
+              <div>
+                <img src="https://ipfs.io/ipfs/QmZAnAuhbwnPa2g5mfAnEKupChPgUM9VXB7USDVsBUnvYU" class="rounded-start rarity-tool-thumbnail-image">
+              </div>
+              <div class="flex-grow-1 overflow-hidden p-2">
+                <div class="card-body">
+                  <h5 class="card-title mb-3">The Bored Ape Yacht Club</h5>
+                  <p class="card-text">BAYC is a collection of 10,000 Bored Ape NFTs—unique digital collectibles living on the Ethereum blockchain. Your Bored Ape doubles as your Yacht Club membership card, and grants access to members-only benefits, the first of which is access to THE BATHROOM, a collaborative graffiti board. Future areas and perks can be unlocked by the community through roadmap activation.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <figure class="m-5">
+          <blockquote class="source-blockquote blockquote">
+            <p><a href="https://github.com/fukuball/rarity-analyser" target="_blank">Cool Rarity</a> is an open source package for easy rarity score calculation.</p>
+            <p style="text-align: justify;">
+              Cool Rarity was born in a <a href="https://github.com/punkscape/01-rarity-analyser-hackathon" target="_blank">Hackathon</a> hosted by <a href="https://punkscape.xyz/" target="_blank">PunkScape</a>, made with love by <a href="https://twitter.com/fukuball" target="_blank">Fukuball</a>. It is easy to configure for developers and easy to use for users, any ERC721 NFT collection with <a href="https://docs.opensea.io/docs/metadata-standards" target="_blank">OpenSea metadata stardard</a> can use Cool Rarity as the rarity score calculation tool. If you have the collection metadata in hand, you can depoly Cool Rarity as your collection rarity tool in minues!
+            </p>
+            <p style="text-align: justify;">
+              If you would like to create your own NFT project rarity ranking website, go ahead to use <a href="https://github.com/fukuball/rarity-analyser" target="_blank">Cool Rarity</a> to generate the rarity ranking website. If you don't kwnon how to do, you can pay me <span style="color: var(--primary);">1 ETH</span>, I can generate the rarity ranking website of your NFT project for you. (Curreny pricing in <a href="https://rarity.tools/list" target="_blank">rarity.tools</a> is <span style="color: var(--primary);">2 ETH</span>, you can save 1 ETH!) Just contact me through: <a href="mailto:fukuball@gmail.com">fukuball@gmail.com</a>.
+            </p>
+            <p style="text-align: justify;">
+              If you like this open source project, please donate me some ETH for futurn maintainance: <span style="color: var(--primary);">0x17cbD516166720b8c75fE75235Ed0218d9CFDFbe</span>
+            </p>
+          </blockquote>
+        </figure>
+      </main>
+      <%- include('./component/footer'); -%>
+    </div>
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+      });
+    </script> 
+  </body>
+</html>
