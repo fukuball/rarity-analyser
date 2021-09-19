@@ -18,6 +18,7 @@ const db = new Database(databasePath);
 router.get('/', function(req, res, next) {
 
   let search = req.query.search;
+  let traits = req.query.traits;
   let orderBy = req.query.order_by;
   let page = req.query.page;
 
@@ -26,6 +27,10 @@ router.get('/', function(req, res, next) {
 
   if (_.isEmpty(search)) {
     search = '';
+  }
+
+  if (_.isEmpty(traits)) {
+    traits = '';
   }
 
   if (orderBy == 'rarity' || orderBy == 'id') {
@@ -64,9 +69,11 @@ router.get('/', function(req, res, next) {
 
   let totalPage =  Math.ceil(totalPunkCount/limit);
 
+  let allTraits = db.prepare('SELECT trait_types.trait_type, trait_detail_types.trait_detail_type, trait_detail_types.punk_count, trait_detail_types.trait_type_id, trait_detail_types.id trait_detail_type_id  FROM trait_detail_types INNER JOIN trait_types ON (trait_detail_types.trait_type_id = trait_types.id) ORDER BY trait_detail_types.trait_type_id, trait_detail_types.id').all();
+
   res.render('index', { 
-    app_title: config.app_name,
-    app_description: config.app_description,
+    appTitle: config.app_name,
+    appDescription: config.app_description,
     ogTitle: config.collection_name + ' | ' + config.app_name,
     ogDescription: config.collection_description + ' | ' + config.app_description,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
@@ -75,7 +82,10 @@ router.get('/', function(req, res, next) {
     punks: punks, 
     totalPage: totalPage, 
     search: search, 
-    orderBy, orderBy, 
+    traits: traits,
+    orderBy: orderBy,
+    selectedTraits: (traits != '') ? traits.split(',') : [],
+    allTraits: allTraits,
     page: page,
     _:_ 
   });
@@ -88,8 +98,8 @@ router.get('/matrix', function(req, res, next) {
   let totalPunkCount = db.prepare('SELECT COUNT(id) as punk_total FROM punks').get().punk_total;
 
   res.render('matrix', {
-    app_title: config.app_name,
-    app_description: config.app_description,
+    appTitle: config.app_name,
+    appDescription: config.app_description,
     ogTitle: config.collection_name + ' | ' + config.app_name,
     ogDescription: config.collection_description + ' | ' + config.app_description,
     ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,

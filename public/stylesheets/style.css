@@ -237,6 +237,20 @@ body {
   border-radius: var(--size-5);
 }
 
+.trait-fileter-btn {
+  width: 100%;
+  max-width: 20rem;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: var(--size-5);  
+}
+
+.trait-fileter-offcanvas {
+  background-color: var(--primary-dark); 
+  color: var(--white);
+}
+
 .punk-avatar {
   width: 100%;
   background-color: #000;
