@@ -127,6 +127,7 @@
           });
         }
 
+        let isChanged = false;
         if (traitSelects) {
           traitSelects.forEach(function(traitSelect) {
             traitSelect.addEventListener('change', async (event) => {
@@ -138,13 +139,14 @@
                 }
               });
               document.getElementById("trait-fileter-selected-num").innerHTML = selectedNum;
+              isChanged = true;
             });
           }); 
         }
 
         const traitFilterOffcanvas = document.getElementById('traitFilterOffcanvas')
         traitFilterOffcanvas.addEventListener('hidden.bs.offcanvas', function () {
-          if (traitSelects) {
+          if (traitSelects && isChanged) {
             let selectedTraits = getSelectedTraits();
             if (selectedTraits.length != 0) {
               window.location = '/?search=<%= search %>&traits='+selectedTraits.join(',')+'&order_by=<%= orderBy %>';
