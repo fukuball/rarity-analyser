@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
   let page = req.query.page;
 
   let offset = 0;
-  let limit = 100;
+  let limit = 60;
 
   if (_.isEmpty(search)) {
     search = '';
