@@ -113,7 +113,7 @@ collectionData.forEach(element => {
 
     element.attributes.forEach(attribute => {
 
-        if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value)) {
+        if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none') {
             return;
         }
 
@@ -210,7 +210,7 @@ collectionData.forEach(element => {
     let thisPunkDetailTraits = {};
     element.attributes.forEach(attribute => {
 
-        if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value)) {
+        if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none') {
             return;
         }
 
