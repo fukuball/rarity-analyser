@@ -7,7 +7,7 @@ const config = {
     collection_description: 'BAYC is a collection of 10,000 Bored Ape NFTs—unique digital collectibles living on the Ethereum blockchain. Your Bored Ape doubles as your Yacht Club membership card, and grants access to members-only benefits, the first of which is access to THE BATHROOM, a collaborative graffiti board. Future areas and perks can be unlocked by the community through roadmap activation.',
     sqlite_file_name: 'database.sqlite',
     ga: 'G-BW69Z04YTP',
-    main_og_image: 'https://ipfs.io/ipfs/QmZAnAuhbwnPa2g5mfAnEKupChPgUM9VXB7USDVsBUnvYU',
+    main_og_image: 'https://onedaypunk-rarity-tool.herokuapp.com/images/og.png',
     content_image_frame: 'circle' // circle, rectangle
 };
 
