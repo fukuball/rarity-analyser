@@ -60,6 +60,13 @@ router.get('/', function(req, res, next) {
     orderByStmt = 'ORDER BY punks.id ASC';
   }
 
+  let totalSupply = db.prepare('SELECT COUNT(punks.id) as punk_total FROM punks').get().punk_total;
+  let allTraitTypes = db.prepare('SELECT trait_types.* FROM trait_types').all();
+  let allTraitTypesData = {};
+  allTraitTypes.forEach(traitType => {
+    allTraitTypesData[traitType.trait_type] = traitType.punk_count;
+  });
+
   let allTraits = db.prepare('SELECT trait_types.trait_type, trait_detail_types.trait_detail_type, trait_detail_types.punk_count, trait_detail_types.trait_type_id, trait_detail_types.id trait_detail_type_id  FROM trait_detail_types INNER JOIN trait_types ON (trait_detail_types.trait_type_id = trait_types.id) ORDER BY trait_types.trait_type, trait_detail_types.trait_detail_type').all();
   let totalPunkCountQuery = 'SELECT COUNT(punks.id) as punk_total FROM punks INNER JOIN punk_scores ON (punks.id = punk_scores.punk_id) ';
   let punksQuery = 'SELECT punks.*, punk_scores.rarity_rank FROM punks INNER JOIN punk_scores ON (punks.id = punk_scores.punk_id) ';
@@ -146,6 +153,8 @@ router.get('/', function(req, res, next) {
     selectedTraits: purifySelectedTraits,
     allTraits: allTraits,
     page: page,
+    totalSupply: totalSupply,
+    allTraitTypesData: allTraitTypesData,
     _:_ 
   });
 });
