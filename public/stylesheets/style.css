@@ -312,6 +312,11 @@ a:hover .punk-info svg:not(.shadow) {
   line-height: 1.2rem;
 }
 
+.punk-description a {
+  text-decoration: none;
+  color: var(--primary);
+}
+
 .punk-rank {
   color: var(--white); 
   font-family: var(--font-family-title);
