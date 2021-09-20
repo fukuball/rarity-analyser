@@ -62,3 +62,6 @@ typings/
 
 # database
 *.sqlite
+
+# system
+.DS_Store
