@@ -8,7 +8,7 @@ const config = {
     sqlite_file_name: 'database.sqlite',
     ga: 'G-BW69Z04YTP',
     main_og_image: 'https://pochi.club/images/og.png',
-    page_item_num: 60,
+    page_item_num: 24,
     content_image_frame: 'rectangle' // circle, rectangle
 };
 
