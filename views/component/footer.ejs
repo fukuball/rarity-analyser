@@ -9,19 +9,6 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', '<%= ga_code %>', {
-    'linker': {
-      'domains': [
-        'www.coolrarity.com',
-        'onedaypunk.coolrarity.com',
-        'bayc.coolrarity.com',
-        'cryptopochi.coolrarity.com',
-        'onedaypunk-rarity-tool.herokuapp.com', 
-        'cool-rarity.herokuapp.com', 
-        'bayc-rarity.herokuapp.com',
-        'cryptopochi-rarity.herokuapp.com'
-      ]
-    }
-  });
+  gtag('config', '<%= ga_code %>');
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
