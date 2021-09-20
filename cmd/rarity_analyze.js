@@ -94,6 +94,9 @@ collectionData.forEach(element => {
     if (_.isEmpty(element.name)) {
         element['name'] = config.collection_name + ' #' + count1;
     }
+    if (!element.name.includes('#'+count1)) {
+        element['name'] = element['name'] + ' #' + count1;
+    }
     if (_.isEmpty(element.description)) {
         element['description'] = '';
     }
