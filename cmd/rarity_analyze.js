@@ -111,6 +111,7 @@ collectionData.forEach(element => {
     
     insertPunkStmt.run(element.id, element.name, element.description, element.image, element.external_url, element.animation_url);
 
+    let thisPunkTraitTypes = [];
     element.attributes.forEach(attribute => {
 
         if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none') {
@@ -138,10 +139,10 @@ collectionData.forEach(element => {
         }
 
         insertPuntTraitStmt.run(punkTraitTypeId, element.id, traitTypeIdMap[attribute.trait_type], attribute.value);  
-        punkTraitTypeId = punkTraitTypeId + 1;          
+        punkTraitTypeId = punkTraitTypeId + 1;
+        
+        thisPunkTraitTypes.push(attribute.trait_type);
     });
-
-    let thisPunkTraitTypes = _.compact(_.map(element.attributes, 'trait_type'));
 
     if (!punkTraitTypeCount.hasOwnProperty(thisPunkTraitTypes.length)) {
         punkTraitTypeCount[thisPunkTraitTypes.length] = 0 + 1;
@@ -206,7 +207,7 @@ collectionData.forEach(element => {
 
     console.log("Analyze punk: #" + element.id);
 
-    let thisPunkTraitTypes = _.compact(_.map(element.attributes, 'trait_type'));
+    let thisPunkTraitTypes = [];
     let thisPunkDetailTraits = {};
     element.attributes.forEach(attribute => {
 
@@ -214,6 +215,7 @@ collectionData.forEach(element => {
             return;
         }
 
+        thisPunkTraitTypes.push(attribute.trait_type);
         thisPunkDetailTraits[attribute.trait_type] = attribute.value;
     });
 
