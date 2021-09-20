@@ -7,7 +7,7 @@ const config = {
     collection_description: 'Cupcats are a profile pictures focused NFT collection but that won\'t be all, Cupcats will not stay as NFTs. With the funds you will help a worldwide shop to be build, that shop will produce cat related products and add value to Cupcats. Shop will not be all about Cupcat products. There will be more than 15 different product categories with more than 100 different products over time. All cat related designs but not restricted with Cupcat designs only. Cupcat shop will also hope to work with freelance designers from all over the world.',
     sqlite_file_name: 'database.sqlite',
     ga: 'G-BW69Z04YTP',
-    main_og_image: 'https://cupcatnft.com/images/webgif2.gif',
+    main_og_image: 'https://cupcats.coolrarity.com/images/cupcats.jpg',
     content_image_frame: 'circle' // circle, rectangle
 };
 
