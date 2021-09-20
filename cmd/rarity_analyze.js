@@ -125,13 +125,13 @@ collectionData.forEach(element => {
         }
 
         // Trait detail type
-        if (!traitDetailTypeCount.hasOwnProperty(attribute.value)) {
+        if (!traitDetailTypeCount.hasOwnProperty(attribute.trait_type+'|||'+attribute.value)) {
             insertTraitDetailTypeStmt.run(traitDetailTypeId, traitTypeIdMap[attribute.trait_type], attribute.value, 0);
-            traitDetailTypeIdMap[attribute.value] = traitDetailTypeId;
+            traitDetailTypeIdMap[attribute.trait_type+'|||'+attribute.value] = traitDetailTypeId;
             traitDetailTypeId = traitDetailTypeId + 1;
-            traitDetailTypeCount[attribute.value] = 0 + 1;
+            traitDetailTypeCount[attribute.trait_type+'|||'+attribute.value] = 0 + 1;
         } else {
-            traitDetailTypeCount[attribute.value] = traitDetailTypeCount[attribute.value] + 1;   
+            traitDetailTypeCount[attribute.trait_type+'|||'+attribute.value] = traitDetailTypeCount[attribute.trait_type+'|||'+attribute.value] + 1;   
         }
 
         insertPuntTraitStmt.run(punkTraitTypeId, element.id, traitTypeIdMap[attribute.trait_type], attribute.value);  
@@ -224,7 +224,7 @@ collectionData.forEach(element => {
         if (thisPunkTraitTypes.includes(traitType)) {
             // has trait
             let traitDetailType = thisPunkDetailTraits[traitType];
-            let thisTraitDetailTypeCount = traitDetailTypeCount[traitDetailType];
+            let thisTraitDetailTypeCount = traitDetailTypeCount[traitType+'|||'+traitDetailType];
             let traitTypeId = traitTypeIdMap[traitType];
             punkScore['trait_type_' + traitTypeId + '_percentile'] = thisTraitDetailTypeCount/totalPunk;
             punkScore['trait_type_' + traitTypeId + '_rarity'] = totalPunk/thisTraitDetailTypeCount;
