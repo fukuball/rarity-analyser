@@ -8,7 +8,7 @@ const config = {
     sqlite_file_name: 'database.sqlite',
     ga: 'G-BW69Z04YTP',
     main_og_image: 'https://cupcats.coolrarity.com/images/cupcats.jpg',
-    page_item_num: 8,
+    page_item_num: 12,
     content_image_frame: 'circle' // circle, rectangle
 };
 
