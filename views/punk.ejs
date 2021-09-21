@@ -93,7 +93,7 @@
                     </div>
                     <div class="trait-value-count">
                       <% if (punkTraitData.hasOwnProperty(traitType.id)) { %>
-                        <%= allDetailTraitTypesData[punkTraitData[traitType.id]] %>
+                        <%= allDetailTraitTypesData[traitType.id+'|||'+punkTraitData[traitType.id]] %>
                       <% } else { %>
                         <%= (totalPunkCount-traitType.punk_count) %>
                       <% } %>
