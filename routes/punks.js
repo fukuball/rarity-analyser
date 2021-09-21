@@ -37,7 +37,7 @@ router.get('/:id', function(req, res, next) {
 
   let allDetailTraitTypesData = {};
   allDetailTraitTypes.forEach(detailTrait => {
-    allDetailTraitTypesData[detailTrait.trait_detail_type] = detailTrait.punk_count;
+    allDetailTraitTypesData[detailTrait.trait_type_id+'|||'+detailTrait.trait_detail_type] = detailTrait.punk_count;
   });
 
   let allTraitCountTypesData = {};
