@@ -11,7 +11,7 @@ const outputPath = appRoot + '/config/badkids_collection.json';
 }*/
 
 
-let from = 926;
+let from = 0;
 let total = 8888;
 
 fs.appendFileSync(outputPath, "[\n");
