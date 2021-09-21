@@ -11,7 +11,7 @@ const db = new Database(databasePath);
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  let projects = db.prepare('SELECT * FROM projects').all();
+  let projects = db.prepare('SELECT * FROM projects ORDER BY timestamp').all();
 
   res.render('index_rarity_tool', { 
     appTitle: config.app_name,
