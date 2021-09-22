@@ -74,6 +74,7 @@ router.get('/', function(req, res, next) {
   let punksQueryValue = {};
 
   if (!_.isEmpty(search)) {
+    search = search + config.coolection_id_from;
     totalPunkCountQuery = totalPunkCountQuery+' WHERE punks.id LIKE :punk_id ';
     totalPunkCountQueryValue['punk_id'] = '%'+search+'%';
 
