@@ -5,6 +5,7 @@ const config = {
     collection_contract_address: '',
     collection_name: 'ERC721 NFT',
     collection_description: '',
+    coolection_id_from: 0,
     sqlite_file_name: 'database.sqlite.index',
     ga: 'G-BW69Z04YTP',
     main_og_image: 'https://cool-rarity.herokuapp.com/images/cool_rarity.png',

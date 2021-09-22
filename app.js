@@ -33,6 +33,7 @@ app.locals.app_name = config.app_name;
 app.locals.ga_code = config.ga;
 app.locals.collection_contract_address = config.collection_contract_address;
 app.locals.collection_name = config.collection_name;
+app.locals.coolection_id_from = config.coolection_id_from;
 app.locals.content_image_frame = config.content_image_frame;
 
 //app.use('/', indexRouter);
