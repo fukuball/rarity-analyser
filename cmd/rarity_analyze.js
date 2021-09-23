@@ -95,7 +95,7 @@ collectionData.forEach(element => {
         element['name'] = config.collection_name + ' #' + count1;
     }
     if (!element.name.includes('#'+count1) && !element.name.includes('#'+(count1+1)) && element.name != (count1+1)) {
-        element['name'] = element['name'] + ' #' + (count1 + coolection_id_from);
+        element['name'] = element['name'] + ' #' + (count1 + config.collection_id_from);
     }
     if (_.isEmpty(element.description)) {
         element['description'] = '';
