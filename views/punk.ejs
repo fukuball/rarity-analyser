@@ -23,7 +23,11 @@
             <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-2" style="padding-left: 30px; padding-right: 30px;">
               <div>
                 <h3 class="punk-rank">Rank #<%= punk.rarity_rank %></h3>
+                <% if (punk.content_image_is_video) { %>
+                <video class="punk-avatar" style="<% if (content_image_frame=='rectangle') { %> border-radius: 10px; <% } %>" src="<%= punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'); %>" alt="<%= punk.name %>" /></video>
+                <% } else { %>
                 <img class="punk-avatar" style="<% if (content_image_frame=='rectangle') { %> border-radius: 10px; <% } %>" src="<%= punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'); %>" alt="<%= punk.name %>" />
+                <% } %>
                 <div class="punk-info text-center mt-4">
                   <span><%= punk.name %></span>
                 </div>

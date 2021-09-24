@@ -112,9 +112,22 @@ collectionData.forEach(element => {
     insertPunkStmt.run(element.id, element.name, element.description, element.image, element.external_url, element.animation_url);
 
     let thisPunkTraitTypes = [];
+
+    if (_.isEmpty(element.attributes) && !_.isEmpty(element.traits)) {
+        element.attributes = [];
+        for (const [key, value] of Object.entries(element.traits)) {
+            element.attributes.push(
+                {
+                    'trait_type': key,
+                    'value': value
+                }
+            );
+        }
+    }
+
     element.attributes.forEach(attribute => {
 
-        if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none') {
+        if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none' || attribute.value.toLowerCase() == '0') {
             return;
         }
 
@@ -209,9 +222,22 @@ collectionData.forEach(element => {
 
     let thisPunkTraitTypes = [];
     let thisPunkDetailTraits = {};
+
+    if (_.isEmpty(element.attributes) && !_.isEmpty(element.traits)) {
+        element.attributes = [];
+        for (const [key, value] of Object.entries(element.traits)) {
+            element.attributes.push(
+                {
+                    'trait_type': key,
+                    'value': value
+                }
+            );
+        }
+    }
+
     element.attributes.forEach(attribute => {
 
-        if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none') {
+        if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none' || attribute.value.toLowerCase() == '0') {
             return;
         }
 
