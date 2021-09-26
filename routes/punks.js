@@ -46,7 +46,11 @@ router.get('/:id', function(req, res, next) {
   });
 
   let title = config.collection_name + ' | ' + config.app_name;
-  let description = config.collection_description + ' | ' + config.app_description
+  //let description = config.collection_description + ' | ' + config.app_description
+  let description = `💎 ID: ${ punk.id }
+  💎 Rarity Rank: ${ punk.id }
+  💎 Rarity Score: ${ punkScore.rarity_sum.toFixed(2) }`;
+
   if (!_.isEmpty(punk)) {
     title = punk.name + ' | ' + config.app_name;
   }
