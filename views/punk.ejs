@@ -92,7 +92,18 @@
                   <div class="d-flex trait-value-block">
                     <div class="flex-grow-1 trait-value">
                       <% if (punkTraitData.hasOwnProperty(traitType.id)) { %>
-                        <%= punkTraitData[traitType.id] %>
+                        <%
+                        if (traitType.trait_data_type == 'date') {
+                          let date = new Date((punkTraitData[traitType.id]-29)*1000);
+                          %>
+                          <%= date.toLocaleString("en-US") %>
+                          <%
+                        } else {
+                          %>
+                          <%= punkTraitData[traitType.id] %>
+                          <%
+                        }
+                        %>
                       <% } else { %>
                         None (Missing Trait)
                       <% } %>

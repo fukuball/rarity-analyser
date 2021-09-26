@@ -6,6 +6,7 @@ const config = {
     collection_name: '10k One Day Punks',
     collection_description: '10k "One Day I\'ll Be A Punk"-punks – a homage to the one and only CryptoPunks. Holding a OneDayPunk will give you early access to PunkScapes and reserve a profile on the PunkScape website.',
     collection_id_from: 0,
+    ignore_traits: ['date'], 
     sqlite_file_name: 'database.sqlite',
     ga: 'G-BW69Z04YTP',
     main_og_image: 'https://onedaypunk-rarity-tool.herokuapp.com/images/og.png',
