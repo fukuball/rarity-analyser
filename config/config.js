@@ -6,10 +6,13 @@ const config = {
     collection_name: 'Bad Kids Alley',
     collection_description: '8,888 collectibles illustrated by @UnstableKido. Our goal is straight forward, We are building a global brand. We want see you bad kids everywhere! Our team is built up of fantastic community leaders and well-connected humans from all around the globe.',
     coolection_id_from: 0,
+    ignore_traits: ['date'], 
     sqlite_file_name: 'database.sqlite',
     ga: 'G-BW69Z04YTP',
     main_og_image: 'https://badkids.coolrarity.com/images/badkids.jpg',
+    item_path_name: 'punk',
     page_item_num: 12,
+    content_image_is_video: false,
     content_image_frame: 'rectangle' // circle, rectangle
 };
 
