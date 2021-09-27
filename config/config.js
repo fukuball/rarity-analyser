@@ -6,10 +6,13 @@ const config = {
     collection_name: 'Frogs In Disguise',
     collection_description: 'All across the land, frogs are being snatched up by storks. King Ribbit needs YOUR help to save the remaining 10,000 frogs in disguise. Join his kingdom today and check out the mysterious world of Frognolia.',
     collection_id_from: 1,
+    ignore_traits: ['date'], 
     sqlite_file_name: 'database.sqlite',
     ga: 'G-BW69Z04YTP',
     main_og_image: 'https://frogsindisguise.com/_next/static/image/assets/hero.3051596d416e2508d26f6ca84cb121a1.jpg',
+    item_path_name: 'punk',
     page_item_num: 60,
+    content_image_is_video: false,
     content_image_frame: 'rectangle' // circle, rectangle
 };
 
