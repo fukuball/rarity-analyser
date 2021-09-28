@@ -139,6 +139,8 @@ collectionData.forEach(element => {
 
     element.attributes.forEach(attribute => {
 
+        attribute.value = attribute.value.toString();
+
         if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none' || attribute.value.toLowerCase() == '0') {
             return;
         }
@@ -271,6 +273,8 @@ collectionData.forEach(element => {
 
     element.attributes.forEach(attribute => {
 
+        attribute.value = attribute.value.toString();
+        
         if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none' || attribute.value.toLowerCase() == '0') {
             return;
         }
