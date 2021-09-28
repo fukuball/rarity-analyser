@@ -95,9 +95,9 @@ collectionData.forEach(element => {
         element['id'] = count1;
     }
     if (_.isEmpty(element.name)) {
-        element['name'] = config.collection_name + ' #' + count1;
+        element['name'] = config.collection_name + ' #' + element.id;
     }
-    if (!element.name.includes('#'+count1) && !element.name.includes('#'+(count1+1)) && element.name != (count1+1)) {
+    if (!element.name.includes('#'+element.id)) {
         element['name'] = element['name'] + ' #' + (count1 + config.collection_id_from);
     }
     if (_.isEmpty(element.description)) {
