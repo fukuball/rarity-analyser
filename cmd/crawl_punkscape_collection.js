@@ -13,7 +13,7 @@ if (fs.existsSync(outputPath)) {
     });
 }
 
-let from = 0;
+let from = 52;
 let total = 10000;
 
 fs.appendFileSync(outputPath, "[\n");
@@ -21,7 +21,7 @@ fs.appendFileSync(outputPath, "[\n");
 for (i = from; i < total; i++) {
     console.log("Process: #" + i);
     if (!existItem.includes(i)) {
-        let url = 'https://bafybeiclqgyaqdgbi3goa7mz5ukp5nix2u3y5pkc22sfaiv5i5aygzcp4i.ipfs.dweb.link/'+i+'/metadata.json';
+        let url = 'https://ipfs.io/ipfs/QmcCBYhPzYod4F1wmYjrHg62EUfxZutQnrBsjNEUHQYf9e/'+i+'/metadata.json';
         let res = request('GET', url);
         if (res.statusCode == 200) {
             let data = res.getBody('utf8');
