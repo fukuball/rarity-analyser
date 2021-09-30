@@ -102,7 +102,7 @@ router.get('/', function(req, res, next) {
     });
 
     if (purifySelectedTraits.length > 0) {
-      if (!_.isEmpty(search)) {
+      if (!_.isEmpty(search.toString())) {
         totalPunkCountQuery = totalPunkCountQuery + ' AND ';
         punksQuery = punksQuery + ' AND ';
       } else {

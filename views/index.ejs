@@ -60,7 +60,7 @@
               %>
                 <h4><%= trait.trait_type %></h4>
                 <select name="trait_select_<%= trait.trait_type_id %>" class="trait-select form-select mb-4">
-                  <option value="<%= trait.trait_type_id %>_All">All (<%= allTraitTypesData[trait.trait_type] %>)</option>
+                  <option value="<%= trait.trait_type_id %>_All">All (<%= totalSupply %>)</option>
                   <option value="<%= trait.trait_type_id %>_None" <% if (selectedTraits.includes(trait.trait_type_id+'_None')) { %> selected <% } %> >None (<%= (totalSupply - allTraitTypesData[trait.trait_type]) %>)</option>
                   <option value="<%= trait.trait_type_id %>_<%= trait.trait_detail_type %>" <% if (selectedTraits.includes(trait.trait_type_id+'_'+trait.trait_detail_type)) { %> selected <% } %> ><%= trait.trait_detail_type %> (<%= trait.punk_count %>)</option>
               <% 
