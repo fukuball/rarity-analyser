@@ -27,12 +27,18 @@ router.get('/:id', function(req, res, next) {
   let allDetailTraitTypes = db.prepare('SELECT trait_detail_types.* FROM trait_detail_types').all();
   let allTraitCountTypes = db.prepare('SELECT punk_trait_counts.* FROM punk_trait_counts').all();
 
-  let punkTraits = db.prepare('SELECT punk_traits.* FROM punk_traits WHERE punk_traits.punk_id = ?').all(punkId);
+  let punkTraits = db.prepare('SELECT punk_traits.*, trait_types.trait_type  FROM punk_traits INNER JOIN trait_types ON (punk_traits.trait_type_id = trait_types.id) WHERE punk_traits.punk_id = ?').all(punkId);
   let totalPunkCount = db.prepare('SELECT COUNT(id) as punk_total FROM punks').get().punk_total;
 
   let punkTraitData = {};
+  let ignoredPunkTraitData = {};
+  let ignoreTraits = config.ignore_traits.map(ignore_trait => ignore_trait.toLowerCase());
   punkTraits.forEach(punkTrait => {
     punkTraitData[punkTrait.trait_type_id] = punkTrait.value;
+
+    if (!ignoreTraits.includes(punkTrait.trait_type.toLowerCase())) {
+      ignoredPunkTraitData[punkTrait.trait_type_id] = punkTrait.value;
+    }
   });
 
   let allDetailTraitTypesData = {};
@@ -47,9 +53,9 @@ router.get('/:id', function(req, res, next) {
 
   let title = config.collection_name + ' | ' + config.app_name;
   //let description = config.collection_description + ' | ' + config.app_description
-  let description = `💎 ID: ${ punk.id }
+  let description = punk ? `💎 ID: ${ punk.id }
     💎 Rarity Rank: ${ punk.rarity_rank }
-    💎 Rarity Score: ${ punkScore.rarity_sum.toFixed(2) }`;
+    💎 Rarity Score: ${ punkScore.rarity_sum.toFixed(2) }` : '';
 
   if (!_.isEmpty(punk)) {
     title = punk.name + ' | ' + config.app_name;
@@ -69,6 +75,7 @@ router.get('/:id', function(req, res, next) {
     allDetailTraitTypesData: allDetailTraitTypesData, 
     allTraitCountTypesData: allTraitCountTypesData, 
     punkTraitData: punkTraitData, 
+    ignoredPunkTraitData: ignoredPunkTraitData,
     totalPunkCount: totalPunkCount, 
     _: _,
     md: md
@@ -104,31 +111,34 @@ router.get('/:id/similar', function(req, res, next) {
   let allTraitTypes = db.prepare('SELECT trait_types.* FROM trait_types').all();
   let similarCondition = '';
   let similarTo = {};
-  allTraitTypes.forEach(traitType => {
-    similarCondition = similarCondition + 'IIF(punk_scores.trait_type_'+traitType.id+'_value = :trait_type_'+traitType.id+', 1 * punk_scores.trait_type_'+traitType.id+'_rarity, 0) + ';
-    similarTo['trait_type_'+traitType.id] = punkScore['trait_type_'+traitType.id+'_value'];
-  });
-  similarTo['trait_count'] = punkScore['trait_count'];
-  similarTo['this_punk_id'] = punkId;
+  let similarPunks = null;
+  if (punkScore) {
+    allTraitTypes.forEach(traitType => {
+      similarCondition = similarCondition + 'IIF(punk_scores.trait_type_'+traitType.id+'_value = :trait_type_'+traitType.id+', 1 * punk_scores.trait_type_'+traitType.id+'_rarity, 0) + ';
+      similarTo['trait_type_'+traitType.id] = punkScore['trait_type_'+traitType.id+'_value'];
+    });
+    similarTo['trait_count'] = punkScore['trait_count'];
+    similarTo['this_punk_id'] = punkId;
+    similarPunks = db.prepare(`
+      SELECT
+        punks.*,
+        punk_scores.punk_id, 
+        (
+          ` 
+          + similarCondition +
+          `
+          IIF(punk_scores.trait_count = :trait_count, 1 * 0, 0)
+        )
+        similar 
+      FROM punk_scores  
+      INNER JOIN punks ON (punk_scores.punk_id = punks.id)
+      WHERE punk_scores.punk_id != :this_punk_id
+      ORDER BY similar desc
+      LIMIT 12
+      `).all(similarTo);
+  }
 
-  let similarPunks = db.prepare(`
-    SELECT
-      punks.*,
-      punk_scores.punk_id, 
-      (
-        ` 
-        + similarCondition +
-        `
-        IIF(punk_scores.trait_count = :trait_count, 1 * 0, 0)
-      )
-      similar 
-    FROM punk_scores  
-    INNER JOIN punks ON (punk_scores.punk_id = punks.id)
-    WHERE punk_scores.punk_id != :this_punk_id
-    ORDER BY similar desc
-    LIMIT 12
-    `).all(similarTo);
-
+  
   let title = config.collection_name + ' | ' + config.app_name;
   let description = config.collection_description + ' | ' + config.app_description
   if (!_.isEmpty(punk)) {

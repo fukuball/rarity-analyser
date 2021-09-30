@@ -91,13 +91,13 @@ let insertPuntTraitStmt = db.prepare("INSERT INTO punk_traits VALUES (?, ?, ?, ?
 let count1 = 0;
 collectionData.forEach(element => {
 
-    if (_.isEmpty(element.id)) {
+    if (_.isEmpty(element.id.toString())) {
         element['id'] = count1;
     }
     if (_.isEmpty(element.name)) {
-        element['name'] = config.collection_name + ' #' + count1;
+        element['name'] = config.collection_name + ' #' + element.id;
     }
-    if (!element.name.includes('#'+count1) && !element.name.includes('#'+(count1+1)) && element.name != (count1+1)) {
+    if (!element.name.includes('#'+element.id)) {
         element['name'] = element['name'] + ' #' + (count1 + config.collection_id_from);
     }
     if (_.isEmpty(element.description)) {
@@ -138,6 +138,10 @@ collectionData.forEach(element => {
     */
 
     element.attributes.forEach(attribute => {
+
+        if (attribute.value) {
+            attribute.value = attribute.value.toString();
+        }
 
         if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none' || attribute.value.toLowerCase() == '0') {
             return;
@@ -248,7 +252,7 @@ insertPunkScoreStmt = db.prepare(insertPunkScoreStmt);
 let count2 = 0;
 collectionData.forEach(element => {
     
-    if (_.isEmpty(element.id)) {
+    if (_.isEmpty(element.id.toString())) {
         element['id'] = count2;
     }
 
@@ -271,6 +275,10 @@ collectionData.forEach(element => {
 
     element.attributes.forEach(attribute => {
 
+        if (attribute.value) {
+            attribute.value = attribute.value.toString();
+        }
+        
         if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none' || attribute.value.toLowerCase() == '0') {
             return;
         }
@@ -341,7 +349,7 @@ let updatPunkRankStmt = db.prepare("UPDATE punk_scores SET rarity_rank = :rarity
 
 let count3 = 0;
 collectionData.forEach(element => {
-    if (_.isEmpty(element.id)) {
+    if (_.isEmpty(element.id.toString())) {
         element['id'] = count3;
     }
 
