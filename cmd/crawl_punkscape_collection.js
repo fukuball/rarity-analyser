@@ -13,7 +13,7 @@ if (fs.existsSync(outputPath)) {
     });
 }
 
-let from = 52;
+let from = 0;
 let total = 10000;
 
 fs.appendFileSync(outputPath, "[\n");
