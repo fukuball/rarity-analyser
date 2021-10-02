@@ -88,7 +88,7 @@ let insertTraitTypeStmt = db.prepare("INSERT INTO trait_types VALUES (?, ?, ?, ?
 let insertTraitDetailTypeStmt = db.prepare("INSERT INTO trait_detail_types VALUES (?, ?, ?, ?)");
 let insertPuntTraitStmt = db.prepare("INSERT INTO punk_traits VALUES (?, ?, ?, ?)");
 
-let count1 = 0;
+let count1 = config.collection_id_from;
 collectionData.forEach(element => {
 
     if (element.id != undefined) {
@@ -252,7 +252,7 @@ insertPunkScoreStmt = insertPunkScoreStmt + ":trait_count,  :trait_count_percent
 db.exec(createScoreTableStmt);
 insertPunkScoreStmt = db.prepare(insertPunkScoreStmt);
 
-let count2 = 0;
+let count2 = config.collection_id_from;
 collectionData.forEach(element => {
     
     if (element.id != undefined) {
@@ -353,7 +353,7 @@ const punkScoreStmt = db.prepare('SELECT rarity_sum FROM punk_scores WHERE punk_
 const punkRankStmt = db.prepare('SELECT COUNT(id) as higherRank FROM punk_scores WHERE rarity_sum > ?');
 let updatPunkRankStmt = db.prepare("UPDATE punk_scores SET rarity_rank = :rarity_rank WHERE punk_id = :punk_id");
 
-let count3 = 0;
+let count3 = config.collection_id_from;
 collectionData.forEach(element => {
     if (element.id != undefined) {
         element.id = element.id.toString();
