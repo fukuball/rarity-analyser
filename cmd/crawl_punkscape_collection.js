@@ -21,7 +21,7 @@ fs.appendFileSync(outputPath, "[\n");
 for (i = from; i < total; i++) {
     console.log("Process: #" + i);
     if (!existItem.includes(i)) {
-        let url = 'https://ipfs.io/ipfs/QmcCBYhPzYod4F1wmYjrHg62EUfxZutQnrBsjNEUHQYf9e/'+i+'/metadata.json';
+        let url = 'https://ipfs.io/ipfs/QmTA5SmL98M2aLygynoYff2VwcUek8XSypKg9C5bjAKtHB/'+i+'/metadata.json';
         let res = request('GET', url);
         if (res.statusCode == 200) {
             let data = res.getBody('utf8');
