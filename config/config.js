@@ -1,19 +1,19 @@
 const config = {
-    app_name: 'BadKids Rarity',
+    app_name: 'Cool Rarity',
     app_description: 'Cool Rarity is an open source package for easy rarity score calculation with ERC721 NFT metadata collection.',
-    collection_file_name: 'badkids_cdn_collection.json',
-    collection_contract_address: '0x4498118b7e1ab8bc9352037cf71f66b3151f4351',
-    collection_name: 'Bad Kids Alley',
-    collection_description: '8,888 collectibles illustrated by @UnstableKido. Our goal is straight forward, We are building a global brand. We want see you bad kids everywhere! Our team is built up of fantastic community leaders and well-connected humans from all around the globe.',
-    coolection_id_from: 0,
+    collection_file_name: 'collection.json',
+    collection_contract_address: '0x5537d90a4a2dc9d9b37bab49b490cf67d4c54e91',
+    collection_name: '10k One Day Punks',
+    collection_description: '10k "One Day I\'ll Be A Punk"-punks – a homage to the one and only CryptoPunks. Holding a OneDayPunk will give you early access to PunkScapes and reserve a profile on the PunkScape website.',
+    collection_id_from: 0,
     ignore_traits: ['date'], 
     sqlite_file_name: 'database.sqlite',
     ga: 'G-BW69Z04YTP',
-    main_og_image: 'https://badkids.coolrarity.com/images/badkids.jpg',
+    main_og_image: 'https://onedaypunk-rarity-tool.herokuapp.com/images/og.png',
     item_path_name: 'punk',
-    page_item_num: 12,
+    page_item_num: 60,
     content_image_is_video: false,
-    content_image_frame: 'rectangle' // circle, rectangle
+    content_image_frame: 'circle' // circle, rectangle
 };
 
 module.exports = config;
