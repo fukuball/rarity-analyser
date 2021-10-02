@@ -91,7 +91,10 @@ let insertPuntTraitStmt = db.prepare("INSERT INTO punk_traits VALUES (?, ?, ?, ?
 let count1 = 0;
 collectionData.forEach(element => {
 
-    if (_.isEmpty(element.id.toString())) {
+    if (element.id != undefined) {
+        element.id = element.id.toString();
+    }
+    if (_.isEmpty(element.id)) {
         element['id'] = count1;
     }
     if (_.isEmpty(element.name)) {
@@ -252,7 +255,10 @@ insertPunkScoreStmt = db.prepare(insertPunkScoreStmt);
 let count2 = 0;
 collectionData.forEach(element => {
     
-    if (_.isEmpty(element.id.toString())) {
+    if (element.id != undefined) {
+        element.id = element.id.toString();
+    }
+    if (_.isEmpty(element.id)) {
         element['id'] = count2;
     }
 
@@ -349,7 +355,10 @@ let updatPunkRankStmt = db.prepare("UPDATE punk_scores SET rarity_rank = :rarity
 
 let count3 = 0;
 collectionData.forEach(element => {
-    if (_.isEmpty(element.id.toString())) {
+    if (element.id != undefined) {
+        element.id = element.id.toString();
+    }
+    if (_.isEmpty(element.id)) {
         element['id'] = count3;
     }
 
