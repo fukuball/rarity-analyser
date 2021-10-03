@@ -141,6 +141,21 @@ Here you can deploy this rarity tool to Heroku in one click, just be sure you ha
 - [X] Matrix page.
 - [X] Similarity analysis, create one page to show top 12 similar for every punk.
 
+## Other Rarity Tools
+
+### Our Friends (One Day Punk) - Also making cool tools!
+
+- [NotChris & RickLove](https://github.com/cryptoDevAmigos/rarity-analyzer)
+- [Nishu](https://github.com/nishantrpai/rarity-score)
+- [OxNight](https://github.com/middlerange/rarity-analyzer)
+- [Mikk-o](https://github.com/mikko-o/rarity-analyser)
+
+### Other
+
+- https://rarity.tools/
+- https://rarity.guide/
+- https://intermezzo.tools/
+
 ## Support
 
 <div>
