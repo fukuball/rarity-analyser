@@ -140,3 +140,15 @@ Here you can deploy this rarity tool to Heroku in one click, just be sure you ha
 - [X] Test with other ERC721 collection metadata.
 - [X] Matrix page.
 - [X] Similarity analysis, create one page to show top 12 similar for every punk.
+
+## Support
+
+<div>
+  <a href="https://punkscape.xyz">
+    <img src="https://punkscape.xyz/assets/logo.827c0d7f.png" alt="Powered by punkscape" width="240" height="40"/>
+  </a>
+</div>
+<div>
+
+<p>Thanks to PunkScape Community for this initiative.</p>
+</div>
