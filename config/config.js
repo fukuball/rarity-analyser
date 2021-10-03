@@ -5,7 +5,7 @@ const config = {
     collection_contract_address: '0x51ae5e2533854495f6c587865af64119db8f59b4',
     collection_name: 'PunkScape',
     collection_description: '10k little landscapes that punks can inhabit – on the Ethereum Blockchain.',
-    collection_id_from: 0,
+    collection_id_from: 1,
     ignore_traits: ['date'], 
     sqlite_file_name: 'database.sqlite',
     ga: 'G-BW69Z04YTP',
