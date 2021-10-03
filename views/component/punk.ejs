@@ -1,12 +1,16 @@
-<a href="/punk/<%= punk.id %>" style="text-decoration: none;">
+<a href="/<%= item_path_name %>/<%= punk.id %>" style="text-decoration: none;">
   <div>
     <% if (punk.rarity_rank) { %>
     <h3 class="punk-rank">Rank #<%= punk.rarity_rank %></h3>
     <% } %>
     <% if (punk.similar) { %>
-    <h3 class="punk-similar-score">Simiar Score #<%= punk.similar.toFixed(2) %></h3>
+    <h3 class="punk-similar-score">Similar Score #<%= punk.similar.toFixed(2) %></h3>
     <% } %>
+    <% if (content_image_is_video) { %>
+    <video class="punk-avatar" style="<% if (content_image_frame=='rectangle') { %> border-radius: 10px; <% } %>" src="<%= punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'); %>" alt="<%= punk.name %>" /></video>
+    <% } else { %>
     <img class="punk-avatar" style="<% if (content_image_frame=='rectangle') { %> border-radius: 10px; <% } %>" src="<%= punk.image.replace('ipfs://', 'https://ipfs.io/ipfs/'); %>" alt="<%= punk.name %>" />
+    <% } %>
     <div class="punk-info text-center">
       <span><%= punk.name %></span>
       <svg 

@@ -6,10 +6,13 @@ const config = {
     collection_name: 'ERC721 NFT',
     collection_description: '',
     coolection_id_from: 0,
+    ignore_traits: ['date'], 
     sqlite_file_name: 'database.sqlite.index',
     ga: 'G-BW69Z04YTP',
     main_og_image: 'https://cool-rarity.herokuapp.com/images/cool_rarity.png',
+    item_path_name: 'punk',
     page_item_num: 60,
+    content_image_is_video: false,
     content_image_frame: 'circle' // circle, rectangle
 };
 

@@ -36,6 +36,8 @@ let traitDetailTypeIdMap = {};
 let traitDetailTypeCount = {};
 let punkTraitTypeCount = {};
 
+let ignoreTraits = config.ignore_traits.map(ignore_trait => ignore_trait.toLowerCase());
+
 db.exec(
     "CREATE TABLE punks (" +
         "id INT, " +
@@ -51,6 +53,7 @@ db.exec(
     "CREATE TABLE trait_types (" +
         "id INT, " +
         "trait_type TEXT, " +
+        "trait_data_type TEXT, " +
         "punk_count INT " +
     ")"
 );
@@ -81,21 +84,24 @@ db.exec(
 );
 
 let insertPunkStmt = db.prepare("INSERT INTO punks VALUES (?, ?, ?, ?, ?, ?)");
-let insertTraitTypeStmt = db.prepare("INSERT INTO trait_types VALUES (?, ?, ?)");
+let insertTraitTypeStmt = db.prepare("INSERT INTO trait_types VALUES (?, ?, ?, ?)");
 let insertTraitDetailTypeStmt = db.prepare("INSERT INTO trait_detail_types VALUES (?, ?, ?, ?)");
 let insertPuntTraitStmt = db.prepare("INSERT INTO punk_traits VALUES (?, ?, ?, ?)");
 
-let count1 = 0;
+let count1 = config.collection_id_from;
 collectionData.forEach(element => {
 
+    if (element.id != undefined) {
+        element.id = element.id.toString();
+    }
     if (_.isEmpty(element.id)) {
         element['id'] = count1;
     }
     if (_.isEmpty(element.name)) {
-        element['name'] = config.collection_name + ' #' + count1;
+        element['name'] = config.collection_name + ' #' + element.id;
     }
-    if (!element.name.includes('#'+count1) && !element.name.includes('#'+(count1+1))) {
-        element['name'] = element['name'] + ' #' + count1;
+    if (!element.name.includes('#'+element.id)) {
+        element['name'] = element['name'] + ' #' + (count1 + config.collection_id_from);
     }
     if (_.isEmpty(element.description)) {
         element['description'] = '';
@@ -112,20 +118,58 @@ collectionData.forEach(element => {
     insertPunkStmt.run(element.id, element.name, element.description, element.image, element.external_url, element.animation_url);
 
     let thisPunkTraitTypes = [];
+
+    if (_.isEmpty(element.attributes) && !_.isEmpty(element.traits)) {
+        element.attributes = [];
+        for (const [key, value] of Object.entries(element.traits)) {
+            element.attributes.push(
+                {
+                    trait_type: key,
+                    value: value
+                }
+            );
+        }
+    }
+
+    // fake data for date
+    /*
+    element.attributes.push({
+        value: '2456221590',
+        trait_type: 'date',
+        display_type: 'date',
+    });
+    */
+
     element.attributes.forEach(attribute => {
 
-        if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none') {
+        if (attribute.value) {
+            attribute.value = attribute.value.toString();
+        }
+
+        if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none' || attribute.value.toLowerCase() == '0') {
             return;
         }
 
         // Trait type
         if (!traitTypeCount.hasOwnProperty(attribute.trait_type)) {
-            insertTraitTypeStmt.run(traitTypeId, _.startCase(attribute.trait_type), 0);
+            let traitDataType = 'string';
+            if (!_.isEmpty(attribute.display_type) && attribute.display_type.toLowerCase() == 'date') {
+                traitDataType = 'date';
+            }
+            insertTraitTypeStmt.run(traitTypeId, _.startCase(attribute.trait_type), traitDataType, 0);
             traitTypeIdMap[attribute.trait_type] = traitTypeId;
             traitTypeId = traitTypeId + 1;
-            traitTypeCount[attribute.trait_type] = 0 + 1;
+            if (!ignoreTraits.includes(attribute.trait_type.toLowerCase())) {
+                traitTypeCount[attribute.trait_type] = 0 + 1;
+            } else {
+                traitTypeCount[attribute.trait_type] = 0;
+            }
         } else {
-            traitTypeCount[attribute.trait_type] = traitTypeCount[attribute.trait_type] + 1;
+            if (!ignoreTraits.includes(attribute.trait_type.toLowerCase())) {
+                traitTypeCount[attribute.trait_type] = traitTypeCount[attribute.trait_type] + 1;
+            } else {
+                traitTypeCount[attribute.trait_type] = 0;
+            }
         }
 
         // Trait detail type
@@ -133,15 +177,25 @@ collectionData.forEach(element => {
             insertTraitDetailTypeStmt.run(traitDetailTypeId, traitTypeIdMap[attribute.trait_type], attribute.value, 0);
             traitDetailTypeIdMap[attribute.trait_type+'|||'+attribute.value] = traitDetailTypeId;
             traitDetailTypeId = traitDetailTypeId + 1;
-            traitDetailTypeCount[attribute.trait_type+'|||'+attribute.value] = 0 + 1;
+            if (!ignoreTraits.includes(attribute.trait_type.toLowerCase())) {
+                traitDetailTypeCount[attribute.trait_type+'|||'+attribute.value] = 0 + 1;
+            } else {
+                traitDetailTypeCount[attribute.trait_type+'|||'+attribute.value] = 0;
+            }
         } else {
-            traitDetailTypeCount[attribute.trait_type+'|||'+attribute.value] = traitDetailTypeCount[attribute.trait_type+'|||'+attribute.value] + 1;   
+            if (!ignoreTraits.includes(attribute.trait_type.toLowerCase())) {
+                traitDetailTypeCount[attribute.trait_type+'|||'+attribute.value] = traitDetailTypeCount[attribute.trait_type+'|||'+attribute.value] + 1; 
+            } else {
+                traitDetailTypeCount[attribute.trait_type+'|||'+attribute.value] = 0;
+            }  
         }
 
         insertPuntTraitStmt.run(punkTraitTypeId, element.id, traitTypeIdMap[attribute.trait_type], attribute.value);  
         punkTraitTypeId = punkTraitTypeId + 1;
         
-        thisPunkTraitTypes.push(attribute.trait_type);
+        if (!ignoreTraits.includes(attribute.trait_type.toLowerCase())) {
+            thisPunkTraitTypes.push(attribute.trait_type);
+        }
     });
 
     if (!punkTraitTypeCount.hasOwnProperty(thisPunkTraitTypes.length)) {
@@ -198,9 +252,12 @@ insertPunkScoreStmt = insertPunkScoreStmt + ":trait_count,  :trait_count_percent
 db.exec(createScoreTableStmt);
 insertPunkScoreStmt = db.prepare(insertPunkScoreStmt);
 
-let count2 = 0;
+let count2 = config.collection_id_from;
 collectionData.forEach(element => {
     
+    if (element.id != undefined) {
+        element.id = element.id.toString();
+    }
     if (_.isEmpty(element.id)) {
         element['id'] = count2;
     }
@@ -209,9 +266,26 @@ collectionData.forEach(element => {
 
     let thisPunkTraitTypes = [];
     let thisPunkDetailTraits = {};
+
+    if (_.isEmpty(element.attributes) && !_.isEmpty(element.traits)) {
+        element.attributes = [];
+        for (const [key, value] of Object.entries(element.traits)) {
+            element.attributes.push(
+                {
+                    trait_type: key,
+                    value: value
+                }
+            );
+        }
+    }
+
     element.attributes.forEach(attribute => {
 
-        if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none') {
+        if (attribute.value) {
+            attribute.value = attribute.value.toString();
+        }
+        
+        if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none' || attribute.value.toLowerCase() == '0') {
             return;
         }
 
@@ -231,24 +305,41 @@ collectionData.forEach(element => {
             let traitDetailType = thisPunkDetailTraits[traitType];
             let thisTraitDetailTypeCount = traitDetailTypeCount[traitType+'|||'+traitDetailType];
             let traitTypeId = traitTypeIdMap[traitType];
-            punkScore['trait_type_' + traitTypeId + '_percentile'] = thisTraitDetailTypeCount/totalPunk;
-            punkScore['trait_type_' + traitTypeId + '_rarity'] = totalPunk/thisTraitDetailTypeCount;
+            if (!ignoreTraits.includes(traitType.toLowerCase())) {
+                punkScore['trait_type_' + traitTypeId + '_percentile'] = thisTraitDetailTypeCount/totalPunk;
+                punkScore['trait_type_' + traitTypeId + '_rarity'] = totalPunk/thisTraitDetailTypeCount;
+                raritySum = raritySum + totalPunk/thisTraitDetailTypeCount;
+            } else {
+                punkScore['trait_type_' + traitTypeId + '_percentile'] = 0;
+                punkScore['trait_type_' + traitTypeId + '_rarity'] = 0;
+                raritySum = raritySum + 0;
+            }
             punkScore['trait_type_' + traitTypeId + '_value'] = traitDetailType;
-            raritySum = raritySum + totalPunk/thisTraitDetailTypeCount;
         } else {   
             // missing trait
             let thisTraitTypeCount = traitTypeCount[traitType];
             let traitTypeId = traitTypeIdMap[traitType];
-            punkScore['trait_type_' + traitTypeId + '_percentile'] = (totalPunk-thisTraitTypeCount)/totalPunk;
-            punkScore['trait_type_' + traitTypeId + '_rarity'] = totalPunk/(totalPunk-thisTraitTypeCount);
+            if (!ignoreTraits.includes(traitType.toLowerCase())) {
+                punkScore['trait_type_' + traitTypeId + '_percentile'] = (totalPunk-thisTraitTypeCount)/totalPunk;
+                punkScore['trait_type_' + traitTypeId + '_rarity'] = totalPunk/(totalPunk-thisTraitTypeCount);
+                raritySum = raritySum + totalPunk/(totalPunk-thisTraitTypeCount);
+            } else {
+                punkScore['trait_type_' + traitTypeId + '_percentile'] = 0;
+                punkScore['trait_type_' + traitTypeId + '_rarity'] = 0;
+                raritySum = raritySum + 0;
+            }
             punkScore['trait_type_' + traitTypeId + '_value'] = 'None';
-            raritySum = raritySum + totalPunk/(totalPunk-thisTraitTypeCount);
         }
     }
-    punkScore['trait_count'] = thisPunkTraitTypes.length;
-    punkScore['trait_count_percentile'] = punkTraitTypeCount[thisPunkTraitTypes.length]/totalPunk;
-    punkScore['trait_count_rarity'] = totalPunk/punkTraitTypeCount[thisPunkTraitTypes.length];
-    raritySum = raritySum + totalPunk/punkTraitTypeCount[thisPunkTraitTypes.length];
+
+
+    thisPunkTraitTypes = thisPunkTraitTypes.filter(thisPunkTraitType => !ignoreTraits.includes(thisPunkTraitType));
+    let thisPunkTraitTypeCount = thisPunkTraitTypes.length;
+
+    punkScore['trait_count'] = thisPunkTraitTypeCount;
+    punkScore['trait_count_percentile'] = punkTraitTypeCount[thisPunkTraitTypeCount]/totalPunk;
+    punkScore['trait_count_rarity'] = totalPunk/punkTraitTypeCount[thisPunkTraitTypeCount];
+    raritySum = raritySum + totalPunk/punkTraitTypeCount[thisPunkTraitTypeCount];
     punkScore['rarity_sum'] = raritySum;
     punkScore['rarity_rank'] = 0;
 
@@ -262,8 +353,11 @@ const punkScoreStmt = db.prepare('SELECT rarity_sum FROM punk_scores WHERE punk_
 const punkRankStmt = db.prepare('SELECT COUNT(id) as higherRank FROM punk_scores WHERE rarity_sum > ?');
 let updatPunkRankStmt = db.prepare("UPDATE punk_scores SET rarity_rank = :rarity_rank WHERE punk_id = :punk_id");
 
-let count3 = 0;
+let count3 = config.collection_id_from;
 collectionData.forEach(element => {
+    if (element.id != undefined) {
+        element.id = element.id.toString();
+    }
     if (_.isEmpty(element.id)) {
         element['id'] = count3;
     }
