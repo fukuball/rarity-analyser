@@ -88,10 +88,13 @@ let insertTraitTypeStmt = db.prepare("INSERT INTO trait_types VALUES (?, ?, ?, ?
 let insertTraitDetailTypeStmt = db.prepare("INSERT INTO trait_detail_types VALUES (?, ?, ?, ?)");
 let insertPuntTraitStmt = db.prepare("INSERT INTO punk_traits VALUES (?, ?, ?, ?)");
 
-let count1 = 0;
+let count1 = config.collection_id_from;
 collectionData.forEach(element => {
 
-    if (_.isEmpty(element.id.toString())) {
+    if (element.id != undefined) {
+        element.id = element.id.toString();
+    }
+    if (_.isEmpty(element.id)) {
         element['id'] = count1;
     }
     if (_.isEmpty(element.name)) {
@@ -139,7 +142,9 @@ collectionData.forEach(element => {
 
     element.attributes.forEach(attribute => {
 
-        attribute.value = attribute.value.toString();
+        if (attribute.value) {
+            attribute.value = attribute.value.toString();
+        }
 
         if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none' || attribute.value.toLowerCase() == '0') {
             return;
@@ -247,10 +252,13 @@ insertPunkScoreStmt = insertPunkScoreStmt + ":trait_count,  :trait_count_percent
 db.exec(createScoreTableStmt);
 insertPunkScoreStmt = db.prepare(insertPunkScoreStmt);
 
-let count2 = 0;
+let count2 = config.collection_id_from;
 collectionData.forEach(element => {
     
-    if (_.isEmpty(element.id.toString())) {
+    if (element.id != undefined) {
+        element.id = element.id.toString();
+    }
+    if (_.isEmpty(element.id)) {
         element['id'] = count2;
     }
 
@@ -273,7 +281,9 @@ collectionData.forEach(element => {
 
     element.attributes.forEach(attribute => {
 
-        attribute.value = attribute.value.toString();
+        if (attribute.value) {
+            attribute.value = attribute.value.toString();
+        }
         
         if (_.isEmpty(attribute.trait_type) || _.isEmpty(attribute.value) || attribute.value.toLowerCase() == 'none' || attribute.value.toLowerCase() == '0') {
             return;
@@ -343,9 +353,12 @@ const punkScoreStmt = db.prepare('SELECT rarity_sum FROM punk_scores WHERE punk_
 const punkRankStmt = db.prepare('SELECT COUNT(id) as higherRank FROM punk_scores WHERE rarity_sum > ?');
 let updatPunkRankStmt = db.prepare("UPDATE punk_scores SET rarity_rank = :rarity_rank WHERE punk_id = :punk_id");
 
-let count3 = 0;
+let count3 = config.collection_id_from;
 collectionData.forEach(element => {
-    if (_.isEmpty(element.id.toString())) {
+    if (element.id != undefined) {
+        element.id = element.id.toString();
+    }
+    if (_.isEmpty(element.id)) {
         element['id'] = count3;
     }
 
