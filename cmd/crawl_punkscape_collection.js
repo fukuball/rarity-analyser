@@ -1,4 +1,5 @@
 const appRoot = require('app-root-path');
+const config = require(appRoot + '/config/config.js');
 const fs = require('fs');
 const request = require('sync-request');
 
@@ -13,15 +14,15 @@ if (fs.existsSync(outputPath)) {
     });
 }
 
-let from = 0;
-let total = 10000;
+let from = 627;
+let total = 627 + config.collection_id_from;
 
 fs.appendFileSync(outputPath, "[\n");
 
 for (i = from; i < total; i++) {
     console.log("Process: #" + i);
     if (!existItem.includes(i)) {
-        let url = 'https://bafybeiclqgyaqdgbi3goa7mz5ukp5nix2u3y5pkc22sfaiv5i5aygzcp4i.ipfs.dweb.link/'+i+'/metadata.json';
+        let url = 'https://bafybeigzsezacjxdsgvtwdsivgc5aczcpuvevp3ks2wahtbsteqvh4xdqi.ipfs.dweb.link/'+i+'/metadata.json';
         let res = request('GET', url);
         if (res.statusCode == 200) {
             let data = res.getBody('utf8');

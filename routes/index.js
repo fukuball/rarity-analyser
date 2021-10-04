@@ -19,6 +19,7 @@ router.get('/', function(req, res, next) {
 
   let search = req.query.search;
   let traits = req.query.traits;
+  let useTraitNormalization = req.query.trait_normalization;
   let orderBy = req.query.order_by;
   let page = req.query.page;
 
@@ -31,6 +32,14 @@ router.get('/', function(req, res, next) {
 
   if (_.isEmpty(traits)) {
     traits = '';
+  }
+
+  let scoreTable = 'punk_scores';
+  if (useTraitNormalization == '1') {
+    useTraitNormalization = '1';
+    scoreTable = 'normalized_punk_scores';
+  } else {
+    useTraitNormalization = '0';
   }
 
   if (orderBy == 'rarity' || orderBy == 'id') {
@@ -55,7 +64,7 @@ router.get('/', function(req, res, next) {
   let punks = null;
   let orderByStmt = '';
   if (orderBy == 'rarity') {
-    orderByStmt = 'ORDER BY punk_scores.rarity_rank ASC';
+    orderByStmt = 'ORDER BY '+scoreTable+'.rarity_rank ASC';
   } else {
     orderByStmt = 'ORDER BY punks.id ASC';
   }
@@ -67,9 +76,9 @@ router.get('/', function(req, res, next) {
     allTraitTypesData[traitType.trait_type] = traitType.punk_count;
   });
 
-  let allTraits = db.prepare('SELECT trait_types.trait_type, trait_detail_types.trait_detail_type, trait_detail_types.punk_count, trait_detail_types.trait_type_id, trait_detail_types.id trait_detail_type_id  FROM trait_detail_types INNER JOIN trait_types ON (trait_detail_types.trait_type_id = trait_types.id) ORDER BY trait_types.trait_type, trait_detail_types.trait_detail_type').all();
-  let totalPunkCountQuery = 'SELECT COUNT(punks.id) as punk_total FROM punks INNER JOIN punk_scores ON (punks.id = punk_scores.punk_id) ';
-  let punksQuery = 'SELECT punks.*, punk_scores.rarity_rank FROM punks INNER JOIN punk_scores ON (punks.id = punk_scores.punk_id) ';
+  let allTraits = db.prepare('SELECT trait_types.trait_type, trait_detail_types.trait_detail_type, trait_detail_types.punk_count, trait_detail_types.trait_type_id, trait_detail_types.id trait_detail_type_id  FROM trait_detail_types INNER JOIN trait_types ON (trait_detail_types.trait_type_id = trait_types.id) WHERE trait_detail_types.punk_count != 0 ORDER BY trait_types.trait_type, trait_detail_types.trait_detail_type').all();
+  let totalPunkCountQuery = 'SELECT COUNT(punks.id) as punk_total FROM punks INNER JOIN '+scoreTable+' ON (punks.id = '+scoreTable+'.punk_id) ';
+  let punksQuery = 'SELECT punks.*, '+scoreTable+'.rarity_rank FROM punks INNER JOIN '+scoreTable+' ON (punks.id = '+scoreTable+'.punk_id) ';
   let totalPunkCountQueryValue = {};
   let punksQueryValue = {};
 
@@ -113,8 +122,8 @@ router.get('/', function(req, res, next) {
 
       purifySelectedTraits.forEach(selectedTrait => {
         selectedTrait = selectedTrait.split('_');
-        totalPunkCountQuery = totalPunkCountQuery+' punk_scores.trait_type_'+selectedTrait[0]+'_value = :trait_type_'+selectedTrait[0]+'_value ';
-        punksQuery = punksQuery+' punk_scores.trait_type_'+selectedTrait[0]+'_value = :trait_type_'+selectedTrait[0]+'_value ';
+        totalPunkCountQuery = totalPunkCountQuery+' '+scoreTable+'.trait_type_'+selectedTrait[0]+'_value = :trait_type_'+selectedTrait[0]+'_value ';
+        punksQuery = punksQuery+' '+scoreTable+'.trait_type_'+selectedTrait[0]+'_value = :trait_type_'+selectedTrait[0]+'_value ';
         if (count != (purifySelectedTraits.length-1)) {
           totalPunkCountQuery = totalPunkCountQuery + ' AND ';
           punksQuery = punksQuery + ' AND ';
@@ -149,6 +158,7 @@ router.get('/', function(req, res, next) {
     totalPunkCount: totalPunkCount,
     totalPage: totalPage, 
     search: search, 
+    useTraitNormalization: useTraitNormalization,
     orderBy: orderBy,
     traits: purifyTraits,
     selectedTraits: purifySelectedTraits,
@@ -162,8 +172,8 @@ router.get('/', function(req, res, next) {
 
 router.get('/matrix', function(req, res, next) {
 
-  let allTraits = db.prepare('SELECT trait_types.trait_type, trait_detail_types.trait_detail_type, trait_detail_types.punk_count FROM trait_detail_types INNER JOIN trait_types ON (trait_detail_types.trait_type_id = trait_types.id) ORDER BY trait_types.trait_type, trait_detail_types.trait_detail_type').all();
-  let allTraitCounts = db.prepare('SELECT * FROM punk_trait_counts ORDER BY trait_count').all();
+  let allTraits = db.prepare('SELECT trait_types.trait_type, trait_detail_types.trait_detail_type, trait_detail_types.punk_count FROM trait_detail_types INNER JOIN trait_types ON (trait_detail_types.trait_type_id = trait_types.id) WHERE trait_detail_types.punk_count != 0 ORDER BY trait_types.trait_type, trait_detail_types.trait_detail_type').all();
+  let allTraitCounts = db.prepare('SELECT * FROM punk_trait_counts WHERE punk_count != 0 ORDER BY trait_count').all();
   let totalPunkCount = db.prepare('SELECT COUNT(id) as punk_total FROM punks').get().punk_total;
 
   res.render('matrix', {
