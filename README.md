@@ -153,6 +153,7 @@ Here you can deploy this rarity tool to Heroku in one click, just be sure you ha
 ### Other
 
 - https://rarity.tools/
+- https://gaswars.io/collections/0x51ae5e2533854495f6c587865af64119db8f59b4/5217
 - https://rarity.guide/
 - https://intermezzo.tools/
 
