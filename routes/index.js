@@ -1,7 +1,9 @@
 const appRoot = require('app-root-path');
 const config = require(appRoot + '/config/config.js');
+const request = require('sync-request');
 const express = require('express');
 const router = express.Router();
+const Web3 = require('web3');
 const fs = require('fs');
 const Database = require('better-sqlite3');
 const _ = require('lodash');
@@ -187,6 +189,54 @@ router.get('/matrix', function(req, res, next) {
     allTraits: allTraits,
     allTraitCounts: allTraitCounts,
     totalPunkCount: totalPunkCount,
+    _:_ 
+  });
+});
+
+router.get('/wallet', function(req, res, next) {
+  let search = req.query.search;
+  let useTraitNormalization = req.query.trait_normalization;
+
+  if (_.isEmpty(search)) {
+    search = '';
+  }
+
+  let scoreTable = 'punk_scores';
+  if (useTraitNormalization == '1') {
+    useTraitNormalization = '1';
+    scoreTable = 'normalized_punk_scores';
+  } else {
+    useTraitNormalization = '0';
+  }
+
+  let isAddress = Web3.utils.isAddress(search);
+  let tokenIds = [];
+  let punks = null;
+  if (isAddress) {
+    let url = 'https://api.punkscape.xyz/address/'+search+'/punkscapes';
+    let result = request('GET', url);
+    let data = result.getBody('utf8');
+    data = JSON.parse(data);
+    data.forEach(element => {
+      tokenIds.push(element.token_id);
+    });
+    if (tokenIds.length > 0) {
+      let punksQuery = 'SELECT punks.*, '+scoreTable+'.rarity_rank FROM punks INNER JOIN '+scoreTable+' ON (punks.id = '+scoreTable+'.punk_id) WHERE punks.id IN ('+tokenIds.join(',')+') ORDER BY '+scoreTable+'.rarity_rank ASC';
+      punks = db.prepare(punksQuery).all();
+    }
+  }
+
+  res.render('wallet', {
+    appTitle: config.app_name,
+    appDescription: config.app_description,
+    ogTitle: config.collection_name + ' | ' + config.app_name,
+    ogDescription: config.collection_description + ' | ' + config.app_description,
+    ogUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
+    ogImage: config.main_og_image,
+    activeTab: 'wallet',
+    punks: punks,
+    search: search, 
+    useTraitNormalization: useTraitNormalization,
     _:_ 
   });
 });

@@ -2,6 +2,11 @@ const appRoot = require('app-root-path');
 const config = require(appRoot + '/config/config.js');
 const fs = require('fs');
 const Database = require('better-sqlite3');
+const argv = require('minimist')(process.argv.slice(2),{
+    string: ['mode'],
+});
+
+let mode = argv['mode'];
 
 let ignoreTraits = config.ignore_traits.map(ignore_trait => ignore_trait.toLowerCase());
 
@@ -13,6 +18,14 @@ if (!fs.existsSync(databasePath)) {
 }
 
 const db = new Database(databasePath);
+
+if (mode != 'force') {
+    let checkTable = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='normalized_punk_scores'").get();
+    if (checkTable.name == 'normalized_punk_scores') {
+        console.log("Database exist.");
+        return;
+    }
+}
 
 let allTraitTypes = db.prepare('SELECT trait_types.* FROM trait_types').all();
 let allTraitTypeCount = db.prepare('SELECT trait_type_id, COUNT(trait_type_id) as trait_type_count, SUM(punk_count) trait_type_sum FROM trait_detail_types GROUP BY trait_type_id').all();
