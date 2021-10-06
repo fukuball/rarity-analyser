@@ -14,7 +14,7 @@ const config = {
     page_item_num: 60,
     content_image_is_video: false,
     content_image_frame: 'circle', // circle, rectangle
-    use_wallet: true
+    use_wallet: false
 };
 
 module.exports = config;
