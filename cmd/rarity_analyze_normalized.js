@@ -21,9 +21,11 @@ const db = new Database(databasePath);
 
 if (mode != 'force') {
     let checkTable = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='normalized_punk_scores'").get();
-    if (checkTable.name == 'normalized_punk_scores') {
-        console.log("Database exist.");
-        return;
+    if (checkTable) {
+        if (checkTable.name == 'normalized_punk_scores') {
+            console.log("Database exist.");
+            return;
+        }
     }
 }
 
