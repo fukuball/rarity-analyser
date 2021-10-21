@@ -2,6 +2,11 @@ const appRoot = require('app-root-path');
 const config = require(appRoot + '/config/config.js');
 const fs = require('fs');
 const Database = require('better-sqlite3');
+const argv = require('minimist')(process.argv.slice(2),{
+    string: ['mode'],
+});
+
+let mode = argv['mode'];
 
 let ignoreTraits = config.ignore_traits.map(ignore_trait => ignore_trait.toLowerCase());
 
@@ -13,6 +18,16 @@ if (!fs.existsSync(databasePath)) {
 }
 
 const db = new Database(databasePath);
+
+if (mode != 'force') {
+    let checkTable = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='normalized_punk_scores'").get();
+    if (checkTable) {
+        if (checkTable.name == 'normalized_punk_scores') {
+            console.log("Database exist.");
+            return;
+        }
+    }
+}
 
 let allTraitTypes = db.prepare('SELECT trait_types.* FROM trait_types').all();
 let allTraitTypeCount = db.prepare('SELECT trait_type_id, COUNT(trait_type_id) as trait_type_count, SUM(punk_count) trait_type_sum FROM trait_detail_types GROUP BY trait_type_id').all();
@@ -28,18 +43,26 @@ let traitTypeRarityScoreSum = [];
 let traitTypeCountNum = [];
 let traitTypeValueCount = [];
 allTraitTypeCount.forEach(traitTypeCount => {
-    let hasMissingTrait = (traitTypeCount.trait_type_sum != totalSupply) ? 1 : 0;
-    if (hasMissingTrait) {
-        missingTraitTypeId.push(traitTypeCount.trait_type_id);
-        traitTypeRarityScoreSum[traitTypeCount.trait_type_id] = totalSupply/(totalSupply-traitTypeCount.trait_type_sum);
-    } else {
-        traitTypeRarityScoreSum[traitTypeCount.trait_type_id] = 0;    
-    }
-    traitTypeCountNum[traitTypeCount.trait_type_id] = traitTypeCount.trait_type_count + hasMissingTrait;
-    traitTypeCountSum = traitTypeCountSum + (traitTypeCount.trait_type_count + hasMissingTrait);
-    traitTypeNum = traitTypeNum + 1;
 
-    traitTypeValueCount[traitTypeCount.trait_type_id] = traitTypeCount.trait_type_count + hasMissingTrait;
+    let thisTraitType = db.prepare('SELECT trait_types.* FROM trait_types WHERE id = ?').get(traitTypeCount.trait_type_id);
+    if (ignoreTraits.includes(thisTraitType.trait_type.toLowerCase())) {
+        traitTypeRarityScoreSum[traitTypeCount.trait_type_id] = 0;
+        traitTypeCountNum[traitTypeCount.trait_type_id] = 0;
+        traitTypeValueCount[traitTypeCount.trait_type_id] = 0;
+    } else {
+        let hasMissingTrait = (traitTypeCount.trait_type_sum != totalSupply) ? 1 : 0;
+        if (hasMissingTrait) {
+            missingTraitTypeId.push(traitTypeCount.trait_type_id);
+            traitTypeRarityScoreSum[traitTypeCount.trait_type_id] = totalSupply/(totalSupply-traitTypeCount.trait_type_sum);
+        } else {
+            traitTypeRarityScoreSum[traitTypeCount.trait_type_id] = 0;    
+        }
+        traitTypeCountNum[traitTypeCount.trait_type_id] = traitTypeCount.trait_type_count + hasMissingTrait;
+        traitTypeCountSum = traitTypeCountSum + (traitTypeCount.trait_type_count + hasMissingTrait);
+        traitTypeNum = traitTypeNum + 1;
+
+        traitTypeValueCount[traitTypeCount.trait_type_id] = traitTypeCount.trait_type_count + hasMissingTrait;
+    }
 });
 traitTypeValueCount[allTraitTypes.length] = traitCountNum;
 let meanValueCount = traitTypeCountSum/traitTypeNum;
@@ -56,7 +79,11 @@ traitCounts.forEach(traitCount => {
 
 let traitTypeMeanRarity = [];
 allTraitTypes.forEach(traitType => {
-    traitTypeMeanRarity[traitType.id] = traitTypeRarityScoreSum[traitType.id]/traitTypeCountNum[traitType.id];
+    if (ignoreTraits.includes(traitType.trait_type.toLowerCase())) {
+        traitTypeMeanRarity[traitType.id] = 0;
+    } else {
+        traitTypeMeanRarity[traitType.id] = traitTypeRarityScoreSum[traitType.id]/traitTypeCountNum[traitType.id];
+    }
 });
 traitTypeMeanRarity[allTraitTypes.length] = traitTypeRarityScoreSum[allTraitTypes.length]/traitCountNum;
 let meanRarity = traitTypeMeanRarity.reduce((a,b) => a + b, 0) / traitTypeMeanRarity.length;
@@ -140,6 +167,8 @@ punkScores.forEach(punkScore => {
             normalizedPunkScore['trait_type_' + i + '_value'] = punkScore['trait_type_' + i + '_value'];
         }
     }
+
+    //console.log(normalizedPunkScore);
 
     insertPunkScoreStmt.run(normalizedPunkScore);
 });

@@ -179,7 +179,7 @@ body {
   margin-right: auto;
 }
 
-.search input {
+.search .search-text-input {
   width: 100%;
   cursor: pointer;
   position: relative;
@@ -197,7 +197,7 @@ body {
   margin: 0;
 }
 
-.search input:focus {
+.search .search-text-input:focus {
   box-shadow: 0 0 0 1px var(--gray-700);
   z-index: 51;
   border-color: var(--gray);

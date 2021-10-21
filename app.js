@@ -37,6 +37,7 @@ app.locals.collection_id_from = config.collection_id_from;
 app.locals.content_image_is_video = config.content_image_is_video;
 app.locals.content_image_frame = config.content_image_frame;
 app.locals.item_path_name = config.item_path_name;
+app.locals.use_wallet = config.use_wallet;
 
 //app.use('/', indexRouter);
 //app.use('/'+config.item_path_name, punksRouter);
