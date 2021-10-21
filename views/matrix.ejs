@@ -21,21 +21,44 @@
         <h1 class="superbig upper text-center"><%= totalPunkCount %></h1>
         <hr class="mt-5 mb-5">
         <h1 class="heading upper text-center">Trait Type Matrix</h1>
-        <div class="d-flex flex-wrap justify-content-center">
-            <% if (!_.isEmpty(allTraits)) { %>
-                <% allTraits.forEach(function(allTrait) { %>
-                <div class="tile">
+        <%
+        let currentTrait = '';
+        %>
+        <% if (!_.isEmpty(allTraits)) { %>
+            <% allTraits.forEach(function(allTrait) { %>
+              <% 
+              if (currentTrait != allTrait.trait_type) {
+                if (currentTrait != '') {
+                  %>
+                  </div>
+                  <%
+                }
+              %>
+                <h3><%= allTrait.trait_type %></h3>
+                <div class="d-flex flex-wrap justify-content-center">
+                  <div class="tile">
                     <h4><%= allTrait.trait_type %></h4>
                     <h5 class="mt-3 mb-3"><%= allTrait.trait_detail_type %></h5>
                     <p><%= ((allTrait.punk_count/totalPunkCount)*100).toFixed(2) %>% have this trait</p>
+                  </div>
+              <% 
+                currentTrait = allTrait.trait_type;
+              } else {
+              %>
+                <div class="tile">
+                  <h4><%= allTrait.trait_type %></h4>
+                  <h5 class="mt-3 mb-3"><%= allTrait.trait_detail_type %></h5>
+                  <p><%= ((allTrait.punk_count/totalPunkCount)*100).toFixed(2) %>% have this trait</p>
                 </div>
-                <% }); %>
-            <% } else { %>
-            <h2 class="text-center">
-                There's no result
-            </h2>
-            <% } %>
-        </div>
+              <%
+              }
+              %>
+            <% }); %>
+        <% } else { %>
+        <h2 class="text-center">
+            There's no result
+        </h2>
+        <% } %>
         <hr class="mt-5 mb-5">
         <h1 class="heading upper text-center">Trait Count Matrix</h1>
         <div class="d-flex flex-wrap justify-content-center">

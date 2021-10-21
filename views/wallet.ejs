@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <%- 
+    include('./component/meta', {
+      appTitle: appTitle, 
+      appDescription: appDescription, 
+      ogTitle: ogTitle, 
+      ogDescription: ogDescription, 
+      ogUrl: ogUrl, 
+      ogImage: ogImage
+    }); 
+    -%>
+  </head>
+  <body class="d-flex text-white bg-dark" style="min-height: 100%;">
+    
+    <div class="container d-flex w-100 p-3 mx-auto flex-column" style="min-height: 100%; max-width: 72em;">
+      <%- include('./component/header'); -%>
+      <main class="px-3" style="min-height: 100%;">
+        <h1 class="superbig upper text-center"><%= collection_name %></h1>
+        <h3 class="text-center mb-3">Check Rarity In Your Wallet</h3>
+        <form class="search text-center">
+          <fieldset>
+            <input class="search-text-input" type="text" name="search" placeholder="Enter your wallet address..." value="<%= search %>">
+            <button type="submit" aria-label="Search">
+              <svg width="24" height="24" viewBox="0 0 512 512" class="icon">
+                <path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
+              </svg>
+            </button>
+          </fieldset>
+          <footer>
+            <button type="submit">Search</button>
+          </footer>
+          <div>
+            <div class="form-check form-switch" style="width: 12rem; margin-left: auto; margin-right: auto; font-size: 1rem; line-height: 30px; margin-top: 15px;">
+              <input style="height: 25px; width: 40px;" class="form-check-input" type="checkbox" id="traitNormalization" <% if (useTraitNormalization == '1') { %> checked <% } %> >
+              <label class="form-check-label" for="traitNormalization">Trait Normalization</label>
+            </div>
+          </div>
+        </form>
+        <div class="row punks">
+          <% if (!_.isEmpty(punks)) { %>
+            <% punks.forEach(function(punk) { %>
+              <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-5" style="padding-left: 30px; padding-right: 30px;">
+                <%- include('./component/punk', {punk: punk, trait_normalization: useTraitNormalization}); -%>
+              </div>
+            <% }); %>
+          <% } else { %>
+          <h1 class="text-center">
+            There's no result.
+          </h1>
+          <% } %>
+        </div>
+      </main>
+      <%- include('./component/footer'); -%>
+    </div>
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const traitNormalizationSwitch = document.querySelector('#traitNormalization');
+        if (traitNormalizationSwitch) {
+          traitNormalizationSwitch.addEventListener('change', async (event) => {
+            const useTraitNormalization = event.target.checked;
+            if (useTraitNormalization) {
+              window.location = '/wallet?search=<%= search %>&trait_normalization=1';
+            } else {
+              window.location = '/wallet?search=<%= search %>&trait_normalization=0';
+            }
+          });
+        }
+      });
+    </script> 
+  </body>
+</html>

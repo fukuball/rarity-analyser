@@ -140,3 +140,31 @@ Here you can deploy this rarity tool to Heroku in one click, just be sure you ha
 - [X] Test with other ERC721 collection metadata.
 - [X] Matrix page.
 - [X] Similarity analysis, create one page to show top 12 similar for every punk.
+
+## Other Rarity Tools
+
+### Our Friends (One Day Punk) - Also making cool tools!
+
+- [NotChris & RickLove](https://github.com/cryptoDevAmigos/rarity-analyzer)
+- [Nishu](https://github.com/nishantrpai/rarity-score)
+- [OxNight](https://github.com/middlerange/rarity-analyzer)
+- [Mikk-o](https://github.com/mikko-o/rarity-analyser)
+
+### Other
+
+- https://rarity.tools/
+- https://gaswars.io/collections/0x51ae5e2533854495f6c587865af64119db8f59b4/5217
+- https://rarity.guide/
+- https://intermezzo.tools/
+
+## Support
+
+<div>
+  <a href="https://punkscape.xyz">
+    <img src="https://punkscape.xyz/assets/logo.827c0d7f.png" alt="Powered by punkscape" width="240" height="40"/>
+  </a>
+</div>
+<div>
+
+<p>Thanks to PunkScape Community for this initiative.</p>
+</div>

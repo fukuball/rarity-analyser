@@ -12,10 +12,10 @@ if (!fs.existsSync(databasePath)) {
 
 const db = new Database(databasePath);
 
-exports.punk = function (punk) {
+exports.punk = function (punk, scoreTable) {
   let punkId = punk.id;
   let punkTraits = db.prepare('SELECT punk_traits.trait_type_id, trait_types.trait_type, punk_traits.value  FROM punk_traits INNER JOIN trait_types ON (punk_traits.trait_type_id = trait_types.id) WHERE punk_traits.punk_id = ?').all(punkId);
-  let punkScore = db.prepare('SELECT punk_scores.* FROM punk_scores WHERE punk_scores.punk_id = ?').get(punkId);
+  let punkScore = db.prepare('SELECT '+scoreTable+'.* FROM '+scoreTable+' WHERE '+scoreTable+'.punk_id = ?').get(punkId);
   let allTraitTypes = db.prepare('SELECT trait_types.* FROM trait_types').all();
   
   let punkTraitsData = [];
