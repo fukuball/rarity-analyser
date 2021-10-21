@@ -94,6 +94,9 @@ collectionData.forEach(element => {
     if (element.id != undefined) {
         element.id = element.id.toString();
     }
+    if (element.id == undefined) {
+        element['id'] = count1;
+    }
     if (_.isEmpty(element.id)) {
         element['id'] = count1;
     }
