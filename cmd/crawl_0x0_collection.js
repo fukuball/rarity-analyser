@@ -15,7 +15,7 @@ if (fs.existsSync(outputPath)) {
 }
 
 let from = 1;
-let total = 600 + config.collection_id_from;
+let total = 601 + config.collection_id_from;
 
 fs.appendFileSync(outputPath, "[\n");
 
