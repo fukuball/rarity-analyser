@@ -6,7 +6,9 @@ Cool Rarity was born in a [Hackathon](https://github.com/punkscape/01-rarity-ana
 
 Here's the demo, One Day Punk rarity website: [https://onedaypunk-rarity-tool.herokuapp.com/](https://onedaypunk-rarity-tool.herokuapp.com/)
 
-And another demo, BAYC rarity website: [https://bayc-rarity.herokuapp.com/](https://bayc-rarity.herokuapp.com/)
+Another demo, BAYC rarity website: [https://bayc-rarity.herokuapp.com/](https://bayc-rarity.herokuapp.com/)
+
+And one more demo, Anti CryptoPunks rarity website: [https://rarity.anticryptopunks.com/](https://rarity.anticryptopunks.com/)
 
 ## Prerequisites
 
