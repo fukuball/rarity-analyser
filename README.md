@@ -4,11 +4,11 @@ Cool Rarity is an open source package for easy rarity score calculation.
 
 Cool Rarity was born in a [Hackathon](https://github.com/punkscape/01-rarity-analyser-hackathon) hosted by [PunkScape](https://punkscape.xyz/), made with love by [Fukuball](https://twitter.com/fukuball). It is easy to configure for developers and easy to use for users, any ERC721 NFT collection with [OpenSea metadata stardard](https://docs.opensea.io/docs/metadata-standards) can use Cool Rarity as the rarity score calculation tool. If you have the collection metadata in hand, you can depoly Cool Rarity as your collection rarity tool in minues!
 
-Here's the demo, One Day Punk rarity website: [https://onedaypunk-rarity-tool.herokuapp.com/](https://onedaypunk-rarity-tool.herokuapp.com/)
+Here's the demo:
 
-Another demo, BAYC rarity website: [https://bayc-rarity.herokuapp.com/](https://bayc-rarity.herokuapp.com/)
-
-And one more demo, Anti CryptoPunks rarity website: [https://rarity.anticryptopunks.com/](https://rarity.anticryptopunks.com/)
+- One Day Punk rarity website: [https://onedaypunk.coolrarity.com/](https://onedaypunk.coolrarity.com/)
+- BAYC rarity website: [https://bayc.coolrarity.com/](https://bayc.coolrarity.com/)
+- Anti CryptoPunks rarity website: [https://rarity.anticryptopunks.com/](https://rarity.anticryptopunks.com/)
 
 ## Prerequisites
 
@@ -160,13 +160,6 @@ Here you can deploy this rarity tool to Heroku in one click, just be sure you ha
 - https://intermezzo.tools/
 
 ## Support
-
 <div>
-  <a href="https://punkscape.xyz">
-    <img src="https://punkscape.xyz/assets/logo.827c0d7f.png" alt="Powered by punkscape" width="240" height="40"/>
-  </a>
-</div>
-<div>
-
-<p>Thanks to PunkScape Community for this initiative.</p>
+<p>Thanks to [PunkScape](https://punkscape.xyz) Community for this initiative.</p>
 </div>
