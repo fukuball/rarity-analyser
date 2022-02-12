@@ -13,6 +13,7 @@
     "rarity-output-json": "node ./cmd/rarity_output_json.js"
   },
   "dependencies": {
+    "all": "^0.0.0",
     "app-root-path": "^3.0.0",
     "better-sqlite3": "^7.4.3",
     "cookie-parser": "~1.4.4",
